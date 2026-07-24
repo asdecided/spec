@@ -1,4 +1,4 @@
-# rac-spec — the specification for RAC (Requirements as Code)
+# asdecided-spec — the AsDecided artifact specification
 
 *Typed, validated, versioned product knowledge for coding agents.*
 
@@ -6,7 +6,7 @@ RAC (Requirements as Code) is a format for storing a team's requirements,
 decisions, roadmaps, prompts, and designs as Markdown artifacts in a Git
 tree — with a closed lifecycle, machine-readable relationship types, and a CI
 gate that rejects broken corpus states before they land.
-[`rac-core`](https://github.com/itsthelore/rac-core) is the reference
+[`asdecided-core`](https://github.com/itsthelore/asdecided-core) is the reference
 implementation; this repository is the contract a second implementation would
 build against. The normative text is [SPEC.md](SPEC.md); the machine-readable
 schemas, vocabularies, conformance definitions, and executable examples live
@@ -44,14 +44,15 @@ should not be either. Enforcement at write time — a merge gate that fails on
 a reference to a retired decision — is the difference between a wiki and a
 system of record.
 
-## What is Lore, then?
+## What is AsDecided, then?
 
-Lore is the product surface: the MCP server identity, CLI branding, and
-tooling built on RAC. This repository is implementation-neutral. Nothing in
-the specification requires `rac-core`, Python, or MCP; everything normative
-is checkable from the files alone.
+AsDecided is the product surface: the native engine, `decided` CLI,
+`decided-mcp` server, and companion tooling built on RAC. This repository is
+implementation-neutral. Nothing in the specification requires
+`asdecided-core`, Rust, or MCP; everything normative is checkable from the
+files alone.
 
-## Can I implement this without rac-core?
+## Can I implement this without asdecided-core?
 
 Yes. That is what this repository is for. Start with
 [SPEC.md](SPEC.md), then [`schema/`](schema/) for the machine-readable

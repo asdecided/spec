@@ -5,7 +5,7 @@
 Merge rights to this repository are held by:
 
 - **Tom Ballard** ([@itsthelore](https://github.com/itsthelore)) — author of
-  the reference implementation, `rac-core`.
+  the reference implementation, `asdecided-core`.
 
 The project is currently solo-maintained by choice. Additional maintainers
 may be added by the existing maintainer; each addition is recorded here.
@@ -27,7 +27,7 @@ may be added by the existing maintainer; each addition is recorded here.
 
 ## Relationship to the reference implementation
 
-`rac-core` is the reference implementation, but this repository is the
+`asdecided-core` is the reference implementation, but this repository is the
 contract: where the two disagree, the disagreement is a bug to be resolved
 explicitly (issue + fix on one side), never resolved silently by either
 repository. Implementers should pin to tagged releases of this repository,

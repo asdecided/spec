@@ -6,8 +6,12 @@ versioning; the compatibility rules are in SPEC.md §10.2.
 
 ## Unreleased
 
+- **Repository identity** — renamed the repository to `asdecided-spec` and
+  updated reference-implementation links to `asdecided-core`. The stable RAC
+  vocabulary, artifact IDs, schema keys, and conformance contracts are
+  unchanged.
 - **conformance/output-parity.json**, **conformance/vectors/** — the
-  output-parity conformance tier (rac-core ADR-063 Guard 2): eleven cases,
+  output-parity conformance tier (asdecided-core ADR-063 Guard 2): eleven cases,
   each pinning the byte-for-byte stdout (with sha256) and exit code of a
   deterministic, recency-free command over the example corpora. The goldens
   are the reference implementation's exact output; an implementation claiming
@@ -17,15 +21,15 @@ versioning; the compatibility rules are in SPEC.md §10.2.
   artifact-spec registry (ordered artifact specs with section tiers, metadata
   enums, descriptions, guidance, synonyms, and starter bodies, plus
   relationship-section descriptions). This file is a source of truth engines
-  read, not derived documentation: the reference implementation vendors it
-  and both of its engines load their specs from the vendored copy, with a
-  sync gate holding the copies identical (rac-core ADR-115, ADR-063 Guard 1).
+  read, not derived documentation: the native reference implementation
+  vendors it for its Rust engine, with a sync gate holding the copies
+  identical (asdecided-core ADR-115, ADR-063 Guard 1).
   Additive; no normative statement in SPEC.md changes.
 
 ## v0.1.0 — 2026-07-05
 
 Initial extraction of the specification from the reference implementation,
-[`rac-core`](https://github.com/itsthelore/rac-core).
+[`asdecided-core`](https://github.com/itsthelore/asdecided-core).
 
 - **SPEC.md** — the normative specification: artifact model (five types,
   frontmatter envelope, ID grammar and path-independent identity, per-type

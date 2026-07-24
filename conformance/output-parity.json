@@ -1,14 +1,14 @@
 {
   "_meta": {
-    "purpose": "Output-parity conformance tier (rac-core ADR-063 Guard 2): each case pins the byte-for-byte stdout and exit code an engine must produce for a deterministic, recency-free command run from this repository's root over an example corpus. An engine conforms to this tier when it reproduces every case exactly.",
+    "purpose": "Output-parity conformance tier (asdecided-core ADR-063 Guard 2): each case pins the byte-for-byte stdout and exit code an engine must produce for a deterministic, recency-free command run from this repository's root over an example corpus. An engine conforms to this tier when it reproduces every case exactly.",
     "environment": {
       "RAC_NO_CACHE": "1",
       "LC_ALL": "C",
       "TZ": "UTC",
       "COLUMNS": "80"
     },
-    "cwd": "the rac-spec repository root",
-    "arbiter": "The golden stdout bytes are the reference implementation's (rac-core) exact output. Where this tier and an implementation disagree, rac-core is the arbiter; where this tier and rac-core disagree, that is a spec defect — file an issue."
+    "cwd": "the asdecided-spec repository root",
+    "arbiter": "The golden stdout bytes are the reference implementation's (asdecided-core) exact output. Where this tier and an implementation disagree, asdecided-core is the arbiter; where this tier and asdecided-core disagree, that is a spec defect — file an issue."
   },
   "cases": [
     {

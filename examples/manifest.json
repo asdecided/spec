@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "purpose": "Machine-readable conformance surface for the RAC (Requirements as Code) specification examples. Each valid corpus must produce zero blocking findings; each invalid case must produce exactly the expected blocking finding codes (advisory findings are permitted alongside). Commands are shown for the reference implementation (rac-core); any conformant implementation must agree.",
+    "purpose": "Machine-readable conformance surface for the RAC (Requirements as Code) specification examples. Each valid corpus must produce zero blocking findings; each invalid case must produce exactly the expected blocking finding codes (advisory findings are permitted alongside). Commands are shown for the reference implementation (asdecided-core); any conformant implementation must agree.",
     "note": "Example corpora are independent. Do not validate examples/ as one tree: identifiers are unique per corpus, and the invalid cases are invalid by design."
   },
   "valid": [
