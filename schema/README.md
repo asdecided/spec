@@ -7,12 +7,11 @@ registry: the ordered artifact specs (requirement, decision, roadmap, prompt,
 design) with their section tiers, metadata enums, descriptions, guidance,
 synonyms, and starter bodies, plus the relationship-section descriptions.
 Unlike the JSON Schemas below, it is not derived documentation — it is a
-source of truth an engine reads directly. The reference implementation
-([`rac-core`](https://github.com/itsthelore/rac-core)) vendors it and both of
-its engines (Python and Rust) load their artifact specs from the vendored
-copy; a sync gate keeps that copy identical to this file (rac-core ADR-115,
-closing ADR-063 Guard 1). Changes to it are normative and follow the process
-in [CONTRIBUTING.md](../CONTRIBUTING.md).
+source of truth an engine reads directly. The native reference implementation
+([`asdecided-core`](https://github.com/itsthelore/asdecided-core)) vendors it
+for its Rust engine; a sync gate keeps that copy identical to this file
+(asdecided-core ADR-115, closing ADR-063 Guard 1). Changes to it are normative
+and follow the process in [CONTRIBUTING.md](../CONTRIBUTING.md).
 
 ## The JSON Schemas
 
@@ -47,6 +46,6 @@ so they are normative in SPEC.md and are not, and cannot be, encoded here:
 
 A validator that ran only these schemas would accept corpora RAC rejects.
 SPEC.md is the contract; these files restate one layer of it. The reference
-implementation (`rac-core`) ships no JSON Schema at all (its validator is
+implementation (`asdecided-core`) ships no JSON Schema at all (its validator is
 imperative code, ADR-052), so these files are derived documentation for
 implementers, not a dependency of any tool.

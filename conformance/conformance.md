@@ -77,8 +77,8 @@ The `examples/` directory is the executable conformance surface:
   enforcement class, and nothing weaker.
 
 An implementation SHOULD run the manifest as its acceptance suite. The
-reference implementation (`rac-core`) is the arbiter where this repository
-and an implementation disagree — and where this repository and `rac-core`
+reference implementation (`asdecided-core`) is the arbiter where this repository
+and an implementation disagree — and where this repository and `asdecided-core`
 disagree, that is a spec defect: file an issue rather than silently following
 either.
 
@@ -86,7 +86,7 @@ either.
 
 [`output-parity.json`](output-parity.json) defines a stricter, optional tier
 for implementations that claim byte-for-byte output parity with the reference
-implementation (the bar rac-core ADR-063 Guard 2 sets for a native engine
+implementation (the bar asdecided-core ADR-063 Guard 2 sets for a native engine
 port). Each case pins an argv, an expected exit code, and a golden stdout
 file in [`vectors/`](vectors/) with its sha256 — deterministic, recency-free
 commands (`validate`, `inspect`, `relationships`, `stats`, all `--json`) run

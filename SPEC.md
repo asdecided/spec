@@ -15,12 +15,12 @@ consumers (tools that read, validate, or serve them).
 ## 2. Status of this document
 
 This is **v0.1.0** of the RAC specification, extracted from the reference
-implementation, [`rac-core`](https://github.com/itsthelore/rac-core). Every
+implementation, [`asdecided-core`](https://github.com/itsthelore/asdecided-core). Every
 normative statement below is traceable to behavior the reference validator
 enforces today (the machine-checked trace lives in `extraction-inventory.json`;
 one deliberate exception is called out in §10). The specification is pre-1.0:
 expect breaking changes before v1.0, governed by the compatibility policy in
-§10. The specification versions independently, decoupled from `rac-core`'s
+§10. The specification versions independently, decoupled from `asdecided-core`'s
 release versioning.
 
 ## 3. Motivation, goals, and non-goals
@@ -39,7 +39,8 @@ corpus states that would mislead a reader, human or agent, before they land.
 - Prescriptive-knowledge semantics: a closed lifecycle with supersession, and
   machine-readable relationship types with referential integrity.
 - Implementation independence: everything here is checkable from the files
-  alone, with no dependency on `rac-core`, Python, or any serving layer.
+  alone, with no dependency on `asdecided-core`, a particular implementation
+  language, or any serving layer.
 
 **Non-goals.**
 
@@ -301,7 +302,7 @@ The JSON Schemas in `schema/` are the normative machine-readable form of
 `schema/artifact.schema.json` for the parsed per-type structural contract.
 They are documentation for implementers, derived from validator behavior — the
 reference implementation itself ships no JSON Schema and takes no
-schema-validation dependency, so these are not a `rac-core` artifact. Prose
+schema-validation dependency, so these are not an `asdecided-core` artifact. Prose
 and schema are cross-checked against one extraction inventory; a disagreement
 between them is a defect in this specification, to be resolved by issue
 rather than by following either side. Prose-only specs drift: OKF shipped
@@ -679,7 +680,7 @@ exception of that kind invites parser bugs, and this specification does not
 copy it.
 
 > **Implementation status.** This subsection is the one requirement in this
-> specification not yet enforced by the reference implementation: `rac-core`
+> specification not yet enforced by the reference implementation: `asdecided-core`
 > does not currently read `rac_spec` or refuse newer-versioned corpora
 > (§10.3). An unknown corpus-config key is a harmless no-op, so declaring
 > `rac_spec` today breaks nothing. A conformant implementation MUST implement
@@ -821,6 +822,6 @@ advisory, never blocking.)
 ---
 
 *This specification is maintained at
-[`itsthelore/rac-spec`](https://github.com/itsthelore/rac-spec) under the
+[`itsthelore/asdecided-spec`](https://github.com/itsthelore/asdecided-spec) under the
 process in `CONTRIBUTING.md` and `GOVERNANCE.md`. The reference implementation
-is [`itsthelore/rac-core`](https://github.com/itsthelore/rac-core).*
+is [`itsthelore/asdecided-core`](https://github.com/itsthelore/asdecided-core).*
