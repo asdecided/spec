@@ -15,7 +15,7 @@ consumers (tools that read, validate, or serve them).
 ## 2. Status of this document
 
 This is **v0.1.0** of the RAC specification, extracted from the reference
-implementation, [`asdecided-core`](https://github.com/itsthelore/asdecided-core). Every
+implementation, [`asdecided-core`](https://github.com/asdecided/core). Every
 normative statement below is traceable to behavior the reference validator
 enforces today (the machine-checked trace lives in `extraction-inventory.json`;
 one deliberate exception is called out in §10). The specification is pre-1.0:
@@ -822,6 +822,6 @@ advisory, never blocking.)
 ---
 
 *This specification is maintained at
-[`itsthelore/asdecided-spec`](https://github.com/itsthelore/asdecided-spec) under the
+[`asdecided/spec`](https://github.com/asdecided/spec) under the
 process in `CONTRIBUTING.md` and `GOVERNANCE.md`. The reference implementation
-is [`itsthelore/asdecided-core`](https://github.com/itsthelore/asdecided-core).*
+is [`asdecided/core`](https://github.com/asdecided/core).*

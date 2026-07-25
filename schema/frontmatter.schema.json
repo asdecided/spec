@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://raw.githubusercontent.com/itsthelore/asdecided-spec/main/schema/frontmatter.schema.json",
+  "$id": "https://raw.githubusercontent.com/asdecided/spec/main/schema/frontmatter.schema.json",
   "title": "RAC (Requirements as Code) artifact frontmatter envelope",
   "description": "The YAML frontmatter envelope of one RAC artifact, per SPEC.md section 6.3. Mirrors the native asdecided-core reference validator exactly: the field set is closed (an unknown field is the blocking finding invalid-metadata-field), schema_version is required whenever a frontmatter block is present, and a document with no frontmatter block at all is legal (the legacy form; that case is outside this schema). Duplicate keys, YAML aliases, nesting deeper than 32 levels, and blocks over 64 KiB are rejected by the parser before schema validation applies.",
   "type": "object",

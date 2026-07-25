@@ -1,7 +1,7 @@
 {
   "_meta": {
     "purpose": "Extraction inventory for the RAC (Requirements as Code) specification. Every normative claim in SPEC.md cites a key in this file via an HTML comment (<!-- inv: <key> -->). This is a working artifact of the spec extraction; it is not itself normative.",
-    "extracted_from": "itsthelore/asdecided-core @ 6f8de33 (branch main state at extraction)",
+    "extracted_from": "asdecided/core @ 6f8de33 (branch main state at extraction)",
     "source_of_truth": "src/rac/ validator code: core/validation.py, core/classification.py, core/artifacts.py, core/frontmatter.py, core/metadata.py, core/identity.py, core/idgen.py, core/relationship_types.py, core/markdown.py, core/corpus.py, core/fs.py, core/okf.py, core/overrides.py, core/limits.py, services/validate.py, services/relationships.py, services/review.py, services/gate.py, services/okf_conformance.py, services/init.py, output/sarif.py, cli.py",
     "verified_by_running": "rac validate rac/, rac relationships rac/ --validate, rac gate rac/ against the asdecided-core dogfood corpus (389 artifacts, all pass)"
   },
