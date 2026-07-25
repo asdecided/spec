@@ -6,8 +6,8 @@ versioning; the compatibility rules are in SPEC.md §10.2.
 
 ## Unreleased
 
-- **Repository identity** — renamed the repository to `asdecided-spec` and
-  updated reference-implementation links to `asdecided-core`. The stable RAC
+- **Repository identity** — moved the repository to `asdecided/spec` and
+  updated reference-implementation links to `asdecided/core`. The stable RAC
   vocabulary, artifact IDs, schema keys, and conformance contracts are
   unchanged.
 - **conformance/output-parity.json**, **conformance/vectors/** — the
@@ -29,7 +29,7 @@ versioning; the compatibility rules are in SPEC.md §10.2.
 ## v0.1.0 — 2026-07-05
 
 Initial extraction of the specification from the reference implementation,
-[`asdecided-core`](https://github.com/itsthelore/asdecided-core).
+[`asdecided-core`](https://github.com/asdecided/core).
 
 - **SPEC.md** — the normative specification: artifact model (five types,
   frontmatter envelope, ID grammar and path-independent identity, per-type

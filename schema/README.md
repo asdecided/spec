@@ -8,7 +8,7 @@ design) with their section tiers, metadata enums, descriptions, guidance,
 synonyms, and starter bodies, plus the relationship-section descriptions.
 Unlike the JSON Schemas below, it is not derived documentation — it is a
 source of truth an engine reads directly. The native reference implementation
-([`asdecided-core`](https://github.com/itsthelore/asdecided-core)) vendors it
+([`asdecided-core`](https://github.com/asdecided/core)) vendors it
 for its Rust engine; a sync gate keeps that copy identical to this file
 (asdecided-core ADR-115, closing ADR-063 Guard 1). Changes to it are normative
 and follow the process in [CONTRIBUTING.md](../CONTRIBUTING.md).

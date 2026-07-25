@@ -4,7 +4,7 @@
 
 Merge rights to this repository are held by:
 
-- **Tom Ballard** ([@itsthelore](https://github.com/itsthelore)) — author of
+- **Tom Ballard** ([@tcballard](https://github.com/tcballard)) — author of
   the reference implementation, `asdecided-core`.
 
 The project is currently solo-maintained by choice. Additional maintainers

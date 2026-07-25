@@ -1,4 +1,4 @@
-# asdecided-spec — the AsDecided artifact specification
+# AsDecided artifact specification
 
 *Typed, validated, versioned product knowledge for coding agents.*
 
@@ -6,7 +6,7 @@ RAC (Requirements as Code) is a format for storing a team's requirements,
 decisions, roadmaps, prompts, and designs as Markdown artifacts in a Git
 tree — with a closed lifecycle, machine-readable relationship types, and a CI
 gate that rejects broken corpus states before they land.
-[`asdecided-core`](https://github.com/itsthelore/asdecided-core) is the reference
+[`asdecided-core`](https://github.com/asdecided/core) is the reference
 implementation; this repository is the contract a second implementation would
 build against. The normative text is [SPEC.md](SPEC.md); the machine-readable
 schemas, vocabularies, conformance definitions, and executable examples live

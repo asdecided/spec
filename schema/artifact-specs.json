@@ -1,7 +1,7 @@
 {
   "_meta": {
     "role": "Canonical machine-readable artifact-spec registry: the ordered ARTIFACT_SPECS (requirement, decision, roadmap, prompt, design) and relationship-section descriptions read by conforming implementations, including the native Rust engine (rac-engine::spec). ADR-063 Guard 1: one shared, language-neutral source of truth, so classification and validation cannot drift between implementations.",
-    "canonical": "This file, in itsthelore/asdecided-spec, is the upstream source of truth. Implementations vendor it (asdecided-core: rust/rac-engine/assets/spec/artifact-specs.json) and a sync gate keeps each vendored copy's artifact_specs and relationship_descriptions payloads identical to this file's. Edit here; downstream copies re-sync — never the reverse.",
+    "canonical": "This file, in asdecided/spec, is the upstream source of truth. Implementations vendor it (asdecided-core: rust/rac-engine/assets/spec/artifact-specs.json) and a sync gate keeps each vendored copy's artifact_specs and relationship_descriptions payloads identical to this file's. Edit here; downstream copies re-sync — never the reverse.",
     "consumers": [
       "rac-engine::spec (Rust, include_str!)"
     ]

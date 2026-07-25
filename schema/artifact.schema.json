@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://raw.githubusercontent.com/itsthelore/asdecided-spec/main/schema/artifact.schema.json",
+  "$id": "https://raw.githubusercontent.com/asdecided/spec/main/schema/artifact.schema.json",
   "title": "RAC (Requirements as Code) parsed artifact — per-type structural contract",
   "description": "The canonical parsed representation of one RAC artifact, as a discriminated union over `type`. RAC's source form is Markdown, not JSON, so this schema validates the *parsed* artifact a conformant parser produces: the frontmatter envelope, the single H1 title, the map of normalized `##` section names to body text, and (for requirement artifacts) the parsed requirement lines. It mirrors the native asdecided-core reference validator: required sections per type, the closed status/category/horizon enums (first non-empty line of the section body, matched case-insensitively), and the [REQ-N] line grammar. Recommended and optional sections are never required here — their absence is advisory (SPEC.md section 9.2, tier 4). Sections outside a type's vocabulary are permitted free content (SPEC.md section 11).",
   "type": "object",

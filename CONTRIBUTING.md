@@ -31,7 +31,7 @@ Normative changes follow this path, in order:
    patch: editorial).
 
 This mirrors the ADR discipline used in the reference implementation
-([`asdecided-core`](https://github.com/itsthelore/asdecided-core), `rac/decisions/`):
+([`asdecided-core`](https://github.com/asdecided/core), `rac/decisions/`):
 decisions are recorded, reviewed by someone other than the author, and never
 silently overridden. Where a spec change reflects a decision recorded there,
 cite the ADR in the PR.
