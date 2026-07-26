@@ -1,16 +1,18 @@
-# AsDecided artifact specification
+# RAC Specification
 
-*Typed, validated, versioned product knowledge for coding agents.*
+**The language-neutral contract behind AsDecided.**
 
-RAC (Requirements as Code) is a format for storing a team's requirements,
-decisions, roadmaps, prompts, and designs as Markdown artifacts in a Git
-tree — with a closed lifecycle, machine-readable relationship types, and a CI
-gate that rejects broken corpus states before they land.
-[`asdecided-core`](https://github.com/asdecided/core) is the reference
-implementation; this repository is the contract a second implementation would
-build against. The normative text is [SPEC.md](SPEC.md); the machine-readable
-schemas, vocabularies, conformance definitions, and executable examples live
-alongside it.
+RAC (Requirements as Code) defines how requirements, decisions, roadmaps,
+prompts, and designs live as typed Markdown in Git. It gives that knowledge
+durable identity, a closed lifecycle, typed relationships, and conformance rules
+strict enough for an agent to treat the current record as authoritative.
+
+This repository is implementation-neutral and currently pre-1.0. Start with
+the normative [specification](SPEC.md), then use the machine-readable
+[`schema/`](schema/), [`vocabulary/`](vocabulary/), and
+[`conformance/`](conformance/) fixtures to build or test an implementation.
+[`asdecided/core`](https://github.com/asdecided/core) is the reference
+implementation.
 
 ## Isn't this just OKF?
 
@@ -26,9 +28,9 @@ RAC writes the same carrier and specifies the semantic layer OKF explicitly
 leaves to producers: a closed `status` lifecycle with supersession, a closed
 typed-relationship vocabulary with referential integrity, explicit `id`-based
 identity that survives file renames (OKF's path-as-identity does not), and
-write-time enforcement — `rac validate` and `rac gate` reject broken links
+write-time enforcement — `decided validate` and `decided gate` reject broken links
 and references to retired decisions in CI, before the knowledge lands. The
-two compose rather than compete: `rac export --okf` emits a conformant OKF
+two compose rather than compete: `decided export --okf` emits a conformant OKF
 bundle, so any OKF consumer can read a RAC corpus. The reverse direction (an
 arbitrary OKF bundle becoming a validated RAC corpus) is not generally
 possible. RAC is the strict layer; OKF is the permissive carrier beneath it.
@@ -49,10 +51,10 @@ system of record.
 AsDecided is the product surface: the native engine, `decided` CLI,
 `decided-mcp` server, and companion tooling built on RAC. This repository is
 implementation-neutral. Nothing in the specification requires
-`asdecided-core`, Rust, or MCP; everything normative is checkable from the
+`asdecided/core`, Rust, or MCP; everything normative is checkable from the
 files alone.
 
-## Can I implement this without asdecided-core?
+## Can I implement this without asdecided/core?
 
 Yes. That is what this repository is for. Start with
 [SPEC.md](SPEC.md), then [`schema/`](schema/) for the machine-readable
