@@ -25,6 +25,8 @@ form of [SPEC.md](../SPEC.md) §6.3–§6.7:
 - **`artifact.schema.json`** — the parsed per-type structural contract: a
   discriminated union over `type` requiring each type's sections and
   constraining its `## Status`/`## Category`/`## Horizon` enum values.
+- **`code-constraints.schema.json`** — the versioned deterministic rule
+  document carried by a decision's `## Code Constraints` fenced YAML block.
 
 ## What these schemas cannot express
 

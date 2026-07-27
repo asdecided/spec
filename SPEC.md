@@ -90,7 +90,10 @@ corpus states that would mislead a reader, human or agent, before they land.
   present (§9.3). Spec conformance is always evaluated under the default
   policy (§9.7); an unqualified conformance claim means the default policy.
 - **Gate** — the composed enforcement run (structural validation, relationship
-  integrity, and review) whose exit signal a CI check consumes (§9.4).
+  integrity, review, and optionally code-constraint enforcement) whose exit
+  signal a CI check consumes (§9.4).
+- **Code constraint** — a deterministic rule carried by a decision artifact
+  and evaluated against repository source files (§8.7).
 - **Tier** — a finding's review priority level, 1 (highest impact) through 6
   (§9.2).
 - **Producer** — a tool that writes artifacts or corpora. **Consumer** — a
@@ -258,9 +261,10 @@ and extracted but never scored and never reported missing.
 | `design` | Context, User Need, Design, Constraints | Rationale, Alternatives, Accessibility, Style Guidance, Open Questions |
 
 Each type's optional sections are exactly its relationship sections (§8.2)
-plus, for `decision`, `Supersedes`. Recognized heading synonyms (e.g.
-`Success Criteria` → `Success Metrics`) aid classification only; validation
-expects the canonical headings. <!-- inv: sections_per_type -->
+plus, for `decision`, `Supersedes` and `Code Constraints`. Recognized heading
+synonyms (e.g. `Success Criteria` → `Success Metrics`) aid classification
+only; validation expects the canonical headings.
+<!-- inv: sections_per_type -->
 
 ### 6.7 Requirement lines
 
@@ -463,6 +467,89 @@ edge name → list of canonical IDs); consumers MUST parse and preserve it but
 MUST NOT yet treat it as the source of relationship truth — the body sections
 are authoritative. <!-- inv: frontmatter -->
 
+### 8.7 Code constraints
+
+A decision artifact MAY carry one `## Code Constraints` section. The section
+turns the decision's enforceable subset into deterministic source checks
+without moving product reasoning into frontmatter. Its content MUST be exactly
+one fenced `yaml` block whose decoded value conforms to
+`schema/code-constraints.schema.json`.
+
+````markdown
+## Code Constraints
+
+```yaml
+version: 1
+rules:
+  - id: no-domain-database-import
+    kind: forbid_import
+    path_glob: "src/domain/**/*.py"
+    pattern: "^sqlalchemy$"
+  - id: no-hard-delete
+    kind: forbid_pattern
+    path_glob: "src/**/*.sql"
+    pattern: "(?i)DELETE\\s+FROM\\s+users"
+  - id: handlers-authorize
+    kind: require_pattern
+    path_glob: "src/api/**/*.{rs,py,ts}"
+    pattern: "authori[sz]e"
+```
+````
+
+The constraint document has a required `version` (this specification: `1`)
+and a non-empty `rules` list. Every rule has:
+
+| Field | Rule |
+| --- | --- |
+| `id` | REQUIRED; unique within the artifact; `^[a-z][a-z0-9]*(?:-[a-z0-9]+)*$` |
+| `kind` | REQUIRED; one of `forbid_pattern`, `require_pattern`, `forbid_import` |
+| `path_glob` | REQUIRED; repository-relative UTF-8 glob; MUST NOT be absolute or contain a `..` path component |
+| `pattern` | REQUIRED; non-empty Rust-regex-compatible expression; look-around and backreferences are not supported |
+| `message` | OPTIONAL; non-empty human explanation reported with a violation |
+
+Unknown fields, rule kinds, or document versions are blocking errors. Invalid
+YAML, an invalid glob or regular expression, a duplicate rule ID, an empty
+match set for `require_pattern`, and more than one `Code Constraints` section
+are also blocking errors. Constraints on a retired decision MUST NOT run.
+
+The rule kinds have the following semantics:
+
+- `forbid_pattern` fails once for every match of `pattern` in a UTF-8 source
+  file selected by `path_glob`.
+- `require_pattern` fails once for every selected UTF-8 source file in which
+  `pattern` does not match. Selecting no files is an error, preventing a
+  misspelled or obsolete glob from passing silently.
+- `forbid_import` matches `pattern` against normalized import targets
+  extracted by a deterministic language adapter. An implementation MUST
+  declare the file extensions it supports and MUST report, rather than skip,
+  a selected file whose extension has no adapter.
+
+Matching is against repository-relative paths with `/` separators. Generated,
+vendored, ignored, binary, and non-UTF-8 files are excluded only when that
+exclusion is committed in repository configuration; implementations MUST NOT
+consult user-global ignore files. A code-constraint run is a pure function of
+the decision corpus, committed configuration, selected repository tree, and
+the explicitly supplied diff base. It MUST NOT call a model, network service,
+or nondeterministic judge.
+
+**Diff enforcement.** A code gate evaluates all live constraints but reports
+violations only in added or modified lines selected by the supplied diff,
+except that `require_pattern` evaluates the complete post-change contents of
+each selected changed file. A full-tree mode MUST also be available for
+baseline certification.
+
+**Coverage.** Implementations MUST report decision enforcement coverage as
+both counts and a percentage:
+
+```text
+live decisions with at least one valid code constraint / live decisions
+```
+
+The numerator counts decisions, not rules. A decision that cannot be expressed
+by this vocabulary remains valid and uncovered; no probabilistic fallback is
+permitted. Coverage is evidence, not a conformance score, and MUST NOT imply
+that an uncovered decision is enforced.
+
 ## 9. Validation, severity, and conformance levels
 
 ### 9.1 The finding model
@@ -519,6 +606,7 @@ and info advisory:**
 | `requirement-normative-keyword` | error | blocking |
 | `malformed-ticket-reference` | error | blocking |
 | `okf-unmapped-type`, `okf-reserved-filename-collision` | error | blocking |
+| `malformed-code-constraints`, `unsupported-code-constraints-version`, `invalid-code-constraint`, `duplicate-code-constraint-id` | error | blocking |
 | `non-utf8-content`, `field-truncated`, `body-truncated` | warning | advisory |
 | `roadmap-no-advancement-link` | warning | advisory |
 | `missing-success-metrics`, `missing-risks`, `empty-problem`, `too-many-requirements`, `duplicate-req-text`, `ambiguous-verb` | warning | advisory |
@@ -538,6 +626,15 @@ by default, regardless of intrinsic severity:**
 | `relationship-self-reference` | warning | blocking |
 | `relationship-edge-unsupported` | warning | blocking |
 
+**Code-constraint enforcement (source: `sentry`) — every finding is blocking
+by default:**
+
+| Code | Severity | Enforcement |
+| --- | --- | --- |
+| `code-constraint-violation` | error | blocking |
+| `code-constraint-empty-match` | error | blocking |
+| `code-constraint-unsupported-language` | error | blocking |
+
 **Review (source: `review`) — tiers 1–2 blocking, 3–6 advisory:**
 
 | Code | Tier | Severity | Enforcement |
@@ -551,10 +648,12 @@ by default, regardless of intrinsic severity:**
 
 ### 9.4 The gate and its exit contract
 
-The gate composes structural validation (including OKF conformance),
-relationship integrity, and review over one corpus snapshot, applies the
-corpus enforcement policy (§9.5), and reports one deterministic, sorted
-finding list. Exit contract: <!-- inv: gate_semantics --> <!-- inv: exit_codes -->
+The corpus gate composes structural validation (including OKF conformance),
+relationship integrity, and review over one corpus snapshot. When code
+enforcement is requested, it additionally composes the Sentry checks in §8.7
+over the selected repository tree and diff. Both modes apply the corpus
+enforcement policy (§9.5) and report one deterministic, sorted finding list.
+Exit contract: <!-- inv: gate_semantics --> <!-- inv: exit_codes -->
 
 | Exit | Meaning |
 | --- | --- |

@@ -6,6 +6,13 @@ versioning; the compatibility rules are in SPEC.md §10.2.
 
 ## Unreleased
 
+- **Deterministic code constraints** — decision artifacts may carry a
+  versioned `## Code Constraints` YAML block with `forbid_pattern`,
+  `require_pattern`, and `forbid_import` rules. §8.7 specifies diff and
+  full-tree enforcement, deterministic execution, explicit unsupported-
+  language failures, and published decision-coverage counts. No model or
+  probabilistic judge is permitted. `schema/code-constraints.schema.json`
+  is the language-neutral machine contract.
 - **Repository identity** — moved the repository to `asdecided/spec` and
   updated reference-implementation links to `asdecided/core`. The stable RAC
   vocabulary, artifact IDs, schema keys, and conformance contracts are

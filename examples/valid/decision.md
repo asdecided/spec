@@ -28,6 +28,18 @@ committed repository configuration.
 Findings are reproducible and CI-enforceable; rules that would need external
 state (ticket existence, link liveness) are out of scope for the engine.
 
+## Code Constraints
+
+```yaml
+version: 1
+rules:
+  - id: no-network-client
+    kind: forbid_import
+    path_glob: "src/domain/**/*.py"
+    pattern: "^(requests|httpx)$"
+    message: Domain validation must remain offline.
+```
+
 ## Alternatives Considered
 
 - Best-effort online checks were rejected: they turn a merge gate into a
