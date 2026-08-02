@@ -17,6 +17,12 @@ versioning; the compatibility rules are in SPEC.md §10.2.
   updated reference-implementation links to `asdecided/core`. The stable RAC
   vocabulary, artifact IDs, schema keys, and conformance contracts are
   unchanged.
+- **mcp/conformance/vectors.json** and **mcp/README.md** — the first
+  language-neutral MCP compatibility surface: current 2026-07-28 semantic
+  vectors, explicitly frozen legacy bytes, JSON-RPC envelope and metadata
+  negatives, HTTP version-carrier and Origin outcomes, notifications, and
+  tool-schema object-root assertions. The fixtures are implementation-neutral
+  and do not depend on a Python oracle.
 - **conformance/output-parity.json**, **conformance/vectors/** — the
   output-parity conformance tier (asdecided-core ADR-063 Guard 2): eleven cases,
   each pinning the byte-for-byte stdout (with sha256) and exit code of a

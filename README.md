@@ -13,6 +13,8 @@ the normative [specification](SPEC.md), then use the machine-readable
 [`conformance/`](conformance/) fixtures to build or test an implementation.
 [`asdecided/core`](https://github.com/asdecided/core) is the reference
 implementation.
+The language-neutral MCP compatibility vectors live in [`mcp/`](mcp/); they are
+a separate serving-contract surface, not part of the RAC artifact model.
 
 ## Isn't this just OKF?
 
