@@ -1,0 +1,357 @@
+{
+  "_meta": {
+    "format": "asdecided-mcp-conformance-v1",
+    "protocol_version": "2026-07-28",
+    "legacy_versions": [
+      "2024-11-05",
+      "2025-03-26",
+      "2025-06-18",
+      "2025-11-25"
+    ],
+    "authority": "asdecided/spec",
+    "official_spec": "https://modelcontextprotocol.io/specification/2026-07-28",
+    "assertion_contract": "JSON Pointer assertions are semantic; exact_frames is reserved for frozen legacy bytes."
+  },
+  "vectors": [
+    {
+      "id": "stdio-current-discovery",
+      "transport": "stdio",
+      "era": "current",
+      "request": {
+        "jsonrpc": "2.0",
+        "id": "discover",
+        "method": "server/discover",
+        "params": {
+          "_meta": {
+            "io.modelcontextprotocol/protocolVersion": "2026-07-28",
+            "io.modelcontextprotocol/clientInfo": {
+              "name": "asdecided-conformance",
+              "version": "1.0.0"
+            },
+            "io.modelcontextprotocol/clientCapabilities": {}
+          }
+        }
+      },
+      "expect": {
+        "frame_count": 1,
+        "assert": [
+          { "pointer": "/result/supportedVersions/0", "equals": "2026-07-28" },
+          { "pointer": "/result/resultType", "equals": "complete" },
+          { "pointer": "/result/cacheScope", "equals": "public" },
+          { "pointer": "/result/ttlMs", "exists": true }
+        ]
+      }
+    },
+    {
+      "id": "stdio-current-tools-list-schema-roots",
+      "transport": "stdio",
+      "era": "current",
+      "request": {
+        "jsonrpc": "2.0",
+        "id": "tools",
+        "method": "tools/list",
+        "params": {
+          "_meta": {
+            "io.modelcontextprotocol/protocolVersion": "2026-07-28",
+            "io.modelcontextprotocol/clientCapabilities": {}
+          }
+        }
+      },
+      "expect": {
+        "frame_count": 1,
+        "assert": [
+          { "pointer": "/result/resultType", "equals": "complete" },
+          { "pointer": "/result/tools/0/inputSchema/type", "equals": "object" },
+          { "pointer": "/result/tools/0/outputSchema/type", "equals": "object" },
+          { "pointer": "/result/ttlMs", "exists": true }
+        ]
+      }
+    },
+    {
+      "id": "stdio-current-invalid-envelope-id-is-null",
+      "transport": "stdio",
+      "era": "current-negative",
+      "request": {
+        "jsonrpc": "1.0",
+        "id": { "object": true },
+        "method": "server/discover",
+        "params": {
+          "_meta": {
+            "io.modelcontextprotocol/protocolVersion": "2026-07-28",
+            "io.modelcontextprotocol/clientCapabilities": {}
+          }
+        }
+      },
+      "expect": {
+        "frame_count": 1,
+        "assert": [
+          { "pointer": "/error/code", "equals": -32600 },
+          { "pointer": "/id", "equals": null }
+        ]
+      }
+    },
+    {
+      "id": "stdio-current-missing-client-capabilities",
+      "transport": "stdio",
+      "era": "current-negative",
+      "request": {
+        "jsonrpc": "2.0",
+        "id": "metadata",
+        "method": "tools/list",
+        "params": {
+          "_meta": {
+            "io.modelcontextprotocol/protocolVersion": "2026-07-28"
+          }
+        }
+      },
+      "expect": {
+        "frame_count": 1,
+        "assert": [
+          { "pointer": "/error/code", "equals": -32602 }
+        ]
+      }
+    },
+    {
+      "id": "stdio-current-notification-has-no-frame",
+      "transport": "stdio",
+      "era": "current",
+      "request": {
+        "jsonrpc": "2.0",
+        "method": "notifications/initialized",
+        "params": {
+          "_meta": {
+            "io.modelcontextprotocol/protocolVersion": "2026-07-28",
+            "io.modelcontextprotocol/clientCapabilities": {}
+          }
+        }
+      },
+      "expect": {
+        "frame_count": 0
+      }
+    },
+    {
+      "id": "stdio-legacy-2025-11-initialize",
+      "transport": "stdio",
+      "era": "legacy-frozen",
+      "request": {
+        "jsonrpc": "2.0",
+        "id": 1,
+        "method": "initialize",
+        "params": {
+          "protocolVersion": "2025-11-25",
+          "capabilities": {},
+          "clientInfo": { "name": "asdecided-conformance", "version": "1.0.0" }
+        }
+      },
+      "expect": {
+        "exact_frames": [
+          "{\"jsonrpc\":\"2.0\",\"id\":1,\"result\":{\"protocolVersion\":\"2025-11-25\",\"capabilities\":{\"experimental\":{},\"prompts\":{\"listChanged\":false},\"resources\":{\"subscribe\":false,\"listChanged\":false},\"tools\":{\"listChanged\":false}},\"serverInfo\":{\"name\":\"lore\",\"version\":\"1.28.1\"}}}"
+        ]
+      }
+    },
+    {
+      "id": "stdio-legacy-tools-list-no-current-hints",
+      "transport": "stdio",
+      "era": "legacy",
+      "request": {
+        "jsonrpc": "2.0",
+        "id": 2,
+        "method": "tools/list",
+        "params": {}
+      },
+      "expect": {
+        "frame_count": 1,
+        "assert": [
+          { "pointer": "/result/tools", "exists": true },
+          { "pointer": "/result/resultType", "absent": true },
+          { "pointer": "/result/ttlMs", "absent": true },
+          { "pointer": "/result/cacheScope", "absent": true }
+        ]
+      }
+    },
+    {
+      "id": "http-current-discovery",
+      "transport": "http",
+      "era": "current",
+      "http": {
+        "path": "/mcp",
+        "allowed_origins": [],
+        "headers": {
+          "Accept": "application/json",
+          "Content-Type": "application/json",
+          "MCP-Protocol-Version": "2026-07-28",
+          "Mcp-Method": "server/discover"
+        }
+      },
+      "request": {
+        "jsonrpc": "2.0",
+        "id": "http-discover",
+        "method": "server/discover",
+        "params": {
+          "_meta": {
+            "io.modelcontextprotocol/protocolVersion": "2026-07-28",
+            "io.modelcontextprotocol/clientCapabilities": {}
+          }
+        }
+      },
+      "expect": {
+        "status": 200,
+        "assert": [
+          { "pointer": "/result/supportedVersions/0", "equals": "2026-07-28" },
+          { "pointer": "/result/resultType", "equals": "complete" }
+        ]
+      }
+    },
+    {
+      "id": "http-version-carrier-conflict",
+      "transport": "http",
+      "era": "current-negative",
+      "http": {
+        "path": "/mcp",
+        "allowed_origins": [],
+        "headers": {
+          "Accept": "application/json",
+          "Content-Type": "application/json",
+          "MCP-Protocol-Version": "2025-11-25",
+          "Mcp-Method": "tools/list"
+        }
+      },
+      "request": {
+        "jsonrpc": "2.0",
+        "id": "version-conflict",
+        "method": "tools/list",
+        "params": {
+          "_meta": {
+            "io.modelcontextprotocol/protocolVersion": "2026-07-28",
+            "io.modelcontextprotocol/clientCapabilities": {}
+          }
+        }
+      },
+      "expect": {
+        "status": 400,
+        "assert": [
+          { "pointer": "/error/code", "equals": -32020 }
+        ]
+      }
+    },
+    {
+      "id": "http-invalid-envelope",
+      "transport": "http",
+      "era": "current-negative",
+      "http": {
+        "path": "/mcp",
+        "allowed_origins": [],
+        "headers": {
+          "Accept": "application/json",
+          "Content-Type": "application/json",
+          "MCP-Protocol-Version": "2026-07-28",
+          "Mcp-Method": "server/discover"
+        }
+      },
+      "request": {
+        "jsonrpc": "1.0",
+        "id": { "object": true },
+        "method": "server/discover",
+        "params": {
+          "_meta": {
+            "io.modelcontextprotocol/protocolVersion": "2026-07-28",
+            "io.modelcontextprotocol/clientCapabilities": {}
+          }
+        }
+      },
+      "expect": {
+        "status": 400,
+        "assert": [
+          { "pointer": "/error/code", "equals": -32600 },
+          { "pointer": "/id", "equals": null }
+        ]
+      }
+    },
+    {
+      "id": "http-origin-rejected-before-body",
+      "transport": "http",
+      "era": "transport-negative",
+      "http": {
+        "path": "/mcp",
+        "allowed_origins": [],
+        "content_length": 1048577,
+        "headers": {
+          "Accept": "application/json",
+          "Content-Type": "application/json",
+          "Origin": "https://attacker.example"
+        }
+      },
+      "request": {
+        "jsonrpc": "2.0",
+        "id": "origin-rejected",
+        "method": "server/discover",
+        "params": {
+          "_meta": {
+            "io.modelcontextprotocol/protocolVersion": "2026-07-28",
+            "io.modelcontextprotocol/clientCapabilities": {}
+          }
+        }
+      },
+      "expect": { "status": 403 }
+    },
+    {
+      "id": "http-origin-allowlisted",
+      "transport": "http",
+      "era": "current",
+      "http": {
+        "path": "/mcp",
+        "allowed_origins": ["https://agent.example"],
+        "headers": {
+          "Accept": "application/json",
+          "Content-Type": "application/json",
+          "Origin": "https://agent.example",
+          "MCP-Protocol-Version": "2026-07-28",
+          "Mcp-Method": "server/discover"
+        }
+      },
+      "request": {
+        "jsonrpc": "2.0",
+        "id": "origin-allowed",
+        "method": "server/discover",
+        "params": {
+          "_meta": {
+            "io.modelcontextprotocol/protocolVersion": "2026-07-28",
+            "io.modelcontextprotocol/clientCapabilities": {}
+          }
+        }
+      },
+      "expect": {
+        "status": 200,
+        "assert": [
+          { "pointer": "/result/supportedVersions/0", "equals": "2026-07-28" }
+        ]
+      }
+    },
+    {
+      "id": "http-current-notification-accepted",
+      "transport": "http",
+      "era": "current",
+      "http": {
+        "path": "/mcp",
+        "allowed_origins": [],
+        "headers": {
+          "Accept": "application/json",
+          "Content-Type": "application/json",
+          "MCP-Protocol-Version": "2026-07-28",
+          "Mcp-Method": "notifications/initialized"
+        }
+      },
+      "request": {
+        "jsonrpc": "2.0",
+        "method": "notifications/initialized",
+        "params": {
+          "_meta": {
+            "io.modelcontextprotocol/protocolVersion": "2026-07-28",
+            "io.modelcontextprotocol/clientCapabilities": {}
+          }
+        }
+      },
+      "expect": { "status": 202 }
+    }
+  ]
+}

@@ -111,3 +111,14 @@ consumer without it MAY derive a title from the filename, OKF §4.1) or
 `description`. A consumer pinned to the behavior of Google's
 reference parser rather than the OKF spec text may therefore reject a valid
 bundle; that is a defect in that parser, not in the bundle.
+
+## MCP compatibility vectors
+
+The RAC artifact conformance surface above is independent of the serving
+layer. Implementations that ship the AsDecided MCP server SHOULD also run the
+language-neutral vectors in [`../mcp/conformance/vectors.json`](../mcp/conformance/vectors.json).
+Those vectors pin the subset of MCP 2026-07-28 and the declared legacy
+compatibility policy that AsDecided exposes: current semantic assertions,
+negative envelope and metadata cases, HTTP carrier policy, and explicitly
+frozen legacy bytes. They are not a second RAC corpus oracle and do not make
+Python a required implementation dependency.
