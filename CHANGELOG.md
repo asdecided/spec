@@ -6,6 +6,16 @@ versioning; the compatibility rules are in SPEC.md §10.2.
 
 ## Unreleased
 
+- **Corpus-pinned spec bundles** (minor, additive) — §6.1 lets a corpus extend
+  its own artifact type set with one JSON bundle in the registry's shape,
+  pinned by path and SHA-256 digest through a new `artifact_types` stanza in
+  the corpus configuration (§6.5). Built-ins always win, per-element defects
+  are advisory (`artifact-spec-skipped`), and a bundle the consumer cannot
+  honour is blocking (`artifact-spec-bundle-digest-mismatch` and siblings).
+  `schema/artifact-spec.schema.json` pins the single-element shape and adds
+  one optional appended field, `okf_type`, the OKF type a bundle-declared
+  type exports under. The built-in five and the vendored registry bytes are
+  unchanged. Mirrors asdecided-core ADR-083 (revised).
 - **Deterministic code constraints** — decision artifacts may carry a
   versioned `## Code Constraints` YAML block with `forbid_pattern`,
   `require_pattern`, and `forbid_import` rules. §8.7 specifies diff and

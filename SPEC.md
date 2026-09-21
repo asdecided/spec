@@ -137,12 +137,29 @@ entry points; an untyped document at those paths is a legitimate entry point.
 
 ### 6.1 Types
 
-The artifact type set is closed: <!-- inv: artifact_types -->
+The built-in artifact type set is closed: <!-- inv: artifact_types -->
 
 `requirement` · `decision` · `roadmap` · `prompt` · `design`
 
-A consumer MUST NOT invent types, and a producer MUST NOT emit a frontmatter
-`type` outside this set (`invalid-metadata-field`). A document that declares
+A corpus MAY extend its own type set by pinning a **spec bundle** in its
+configuration (§6.5): one JSON file in the shape of the shared registry
+(`schema/artifact-specs.json`, one element per type, each conforming to
+`schema/artifact-spec.schema.json`), pinned by path and SHA-256 content
+digest. A bundle type is registered for that corpus only, after the built-ins
+and in bundle order; a bundle element whose name is a built-in's, duplicates
+an earlier element, or fails the element contract is skipped with an advisory
+finding (`artifact-spec-skipped`), and built-ins always win. A bundle the
+consumer cannot honour — a malformed declaration, a missing or unreadable
+file, or bytes that do not hash to the pinned digest — is a blocking failure
+of the corpus (`artifact-spec-bundle-digest-mismatch` and siblings), never a
+partial registry. Bundle types are structural only: they classify and
+validate through the same section mechanism as built-ins, are not valid
+relationship targets, and add no relationship types (§8).
+
+Within a corpus, the registered type set is therefore the built-ins plus its
+admitted bundle types. A consumer MUST NOT invent types beyond that set, and a
+producer MUST NOT emit a frontmatter `type` outside it
+(`invalid-metadata-field`). A document that declares
 no type and matches no type structurally is *untyped*: consumers MUST treat it
 as a valid, skipped document — never validate it against a type it does not
 have, and never fail the corpus because of it. <!-- inv: classification -->
@@ -242,7 +259,20 @@ A corpus root holds `.rac/config.yaml`, discovered by walking upward from the
 working directory. It carries machine policy, not knowledge:
 `repository_key` (REQUIRED for ID generation), `rac_spec` (the spec-version
 declaration, §10.1), and OPTIONAL `ticketing.provider`, `validation` severity
-overrides, and `enforcement` policy (§9.5). <!-- inv: reserved_structure -->
+overrides, `enforcement` policy (§9.5), and `artifact_types`, the spec-bundle
+pin of §6.1: <!-- inv: reserved_structure -->
+
+```yaml
+artifact_types:
+  version: 1
+  bundle:
+    path: .decided/artifact-specs.json
+    digest: sha256:<64 lowercase hex over the file's raw bytes>
+```
+
+`version` MUST be `1`; `path` MUST be POSIX-relative to the repository root
+and resolve to a regular file inside it (no absolute forms, `.`, `..`, or
+symlinks); `digest` MUST match the file's bytes before the bundle is read.
 
 ### 6.6 Sections per type
 

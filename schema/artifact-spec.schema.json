@@ -1,0 +1,101 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://asdecided.com/spec/schema/artifact-spec.schema.json",
+  "title": "RAC artifact-spec registry element",
+  "description": "One element of the artifact_specs array in artifact-specs.json: the complete, language-neutral description of one artifact type. Every built-in type is an element of this shape, and a corpus-pinned spec bundle (SPEC.md section 6.1 and 6.5) is a JSON object whose artifact_specs array holds elements of this shape. Object key order is significant wherever the description says so; an implementation preserves it. The shape is append-only: new fields are optional and appended, and existing fields keep their meaning.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["name", "display", "required"],
+  "properties": {
+    "name": {
+      "description": "The canonical type key, used as the frontmatter type value, the family directory name (<name>s), and the schema/templates key. Lower-case, starts with a letter, 2 to 32 characters; never the reserved word unknown. A bundle element whose name is a built-in's is skipped: built-ins always win.",
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9_-]{1,31}$",
+      "not": { "const": "unknown" }
+    },
+    "display": {
+      "description": "The human label (Requirement, Decision, Runbook). Non-empty.",
+      "type": "string",
+      "minLength": 1
+    },
+    "required": {
+      "description": "Sections that define the type, each scored 1 point by the classifier and required by validation. Normalised section names: trimmed, lower-case, single-spaced, in declared order. Non-empty.",
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "#/$defs/section" }
+    },
+    "recommended": {
+      "description": "Expected-but-optional sections, scored one half point and reported as missing recommended by validation. Declared order.",
+      "type": "array",
+      "items": { "$ref": "#/$defs/section" }
+    },
+    "optional": {
+      "description": "Recognised sections that are never scored and never reported missing; this is where a type lists the relationship sections it may carry (related decisions, related requirements, related tickets, ...). Listing a relationship section admits it as a source of references; it does not make the type a valid relationship target and adds no relationship type.",
+      "type": "array",
+      "items": { "$ref": "#/$defs/section" }
+    },
+    "metadata": {
+      "description": "Section name to its closed vocabulary of allowed values, in declared order (for example status to [Proposed, Accepted, Superseded]). Values are matched case-insensitively and reported in their canonical spelling.",
+      "type": "object",
+      "propertyNames": { "$ref": "#/$defs/section" },
+      "additionalProperties": {
+        "type": "array",
+        "minItems": 1,
+        "items": { "type": "string", "minLength": 1 }
+      }
+    },
+    "retired_status": {
+      "description": "The subset of metadata.status values that mark a retired artifact (Superseded, Deprecated). Each entry must appear in metadata.status when both are present.",
+      "type": "array",
+      "items": { "type": "string", "minLength": 1 }
+    },
+    "descriptions": {
+      "description": "Section name to a one-line description rendered by schema output, in declared order.",
+      "type": "object",
+      "propertyNames": { "$ref": "#/$defs/section" },
+      "additionalProperties": { "type": "string" }
+    },
+    "guidance": {
+      "description": "Section name to the prompt lines rendered as comments in a starter template and offered by improve, in declared order.",
+      "type": "object",
+      "propertyNames": { "$ref": "#/$defs/section" },
+      "additionalProperties": {
+        "type": "array",
+        "items": { "type": "string" }
+      }
+    },
+    "synonyms": {
+      "description": "Alternative heading (normalised) to the canonical section it maps to, applied before section matching for this type only.",
+      "type": "object",
+      "propertyNames": { "$ref": "#/$defs/section" },
+      "additionalProperties": { "$ref": "#/$defs/section" }
+    },
+    "id_field": {
+      "description": "A section that carries the artifact's canonical identifier when frontmatter is absent. No built-in sets it; null when unused.",
+      "type": ["string", "null"],
+      "minLength": 1
+    },
+    "starter_bodies": {
+      "description": "Section name to the starter text a new artifact of this type is scaffolded with, in declared order. A bundle type has no template file: its template is rendered from required and recommended sections, starter bodies, and guidance.",
+      "type": "object",
+      "propertyNames": { "$ref": "#/$defs/section" },
+      "additionalProperties": { "type": "string" }
+    },
+    "okf_type": {
+      "description": "Appended, optional. The OKF type an export writes for artifacts of this type. Absent on the built-in five, whose mapping is the fixed table in the OKF profile (requirement to Requirement, decision to ADR, roadmap to Roadmap, prompt to Prompt, design to Design). A bundle element that omits it exports under its display. Non-empty when present.",
+      "type": "string",
+      "minLength": 1,
+      "pattern": "^\\S(.*\\S)?$"
+    }
+  },
+  "$defs": {
+    "section": {
+      "description": "A normalised section name: trimmed, lower-case, single-spaced, as the classifier compares headings after normalisation.",
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 128,
+      "pattern": "^[^\\sA-Z][^\\n]*$",
+      "not": { "pattern": "\\s{2,}|\\s$|[A-Z]" }
+    }
+  }
+}
