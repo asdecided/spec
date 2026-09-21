@@ -7,7 +7,15 @@ registry: the ordered artifact specs (requirement, decision, roadmap, prompt,
 design) with their section tiers, metadata enums, descriptions, guidance,
 synonyms, and starter bodies, plus the relationship-section descriptions.
 Unlike the JSON Schemas below, it is not derived documentation — it is a
-source of truth an engine reads directly. The native reference implementation
+source of truth an engine reads directly.
+
+**`artifact-spec.schema.json`** pins the shape of *one* registry element, and
+is the contract a corpus-pinned spec bundle (SPEC.md §6.1, §6.5) is held to:
+the twelve registry keys, their types and ordering semantics, plus one
+optional appended field, `okf_type`, the OKF `type` the export writes for a
+bundle-declared type (defaulting to the element's `display`; the five
+built-in rows keep their fixed mapping). Built-in elements do not set
+`okf_type`. The shape is append-only: new fields are optional and appended. The native reference implementation
 ([`asdecided-core`](https://github.com/asdecided/core)) vendors it
 for its Rust engine; a sync gate keeps that copy identical to this file
 (asdecided-core ADR-115, closing ADR-063 Guard 1). Changes to it are normative

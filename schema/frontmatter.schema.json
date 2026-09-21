@@ -16,7 +16,7 @@
       "pattern": "^[A-Za-z][A-Za-z0-9]{1,9}-[0-9A-HJKMNP-TV-Za-hjkmnp-tv-z]{12}$"
     },
     "type": {
-      "description": "The declared artifact type. Closed set (SPEC.md section 6.1); an unregistered value is the blocking finding invalid-metadata-field.",
+      "description": "The declared artifact type. The closed built-in set (SPEC.md section 6.1); a corpus that pins a spec bundle (section 6.5) also registers the bundle's admitted type names for itself, which this enum cannot enumerate. Any other value is the blocking finding invalid-metadata-field.",
       "type": "string",
       "enum": ["requirement", "decision", "roadmap", "prompt", "design"]
     },
