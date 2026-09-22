@@ -16,6 +16,16 @@ versioning; the compatibility rules are in SPEC.md §10.2.
   one optional appended field, `okf_type`, the OKF type a bundle-declared
   type exports under. The built-in five and the vendored registry bytes are
   unchanged. Mirrors asdecided-core ADR-083 (revised).
+- **Inherited bundle types and type overrides** (minor, additive) — §6.1 and
+  §6.5 record that a consumer composing a corpus with parent corpora carries
+  their bundle types bottom-up after the corpus's own, that identical
+  declarations are one type and a same-name, different-content declaration is
+  blocking (`corpus-federation-artifact-type-conflict`), and that the
+  composing corpus resolves it only through an `overrides` list in
+  `artifact_types` (`name`, `prefer`, `rationale`) backed by one of its own
+  Accepted decisions (`corpus-federation-invalid-override` otherwise).
+  `bundle` becomes OPTIONAL beside `overrides`. Mirrors asdecided-core
+  ADR-150.
 - **Deterministic code constraints** — decision artifacts may carry a
   versioned `## Code Constraints` YAML block with `forbid_pattern`,
   `require_pattern`, and `forbid_import` rules. §8.7 specifies diff and
