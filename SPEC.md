@@ -145,8 +145,10 @@ A corpus MAY extend its own type set by pinning a **spec bundle** in its
 configuration (§6.5): one JSON file in the shape of the shared registry
 (`schema/artifact-specs.json`, one element per type, each conforming to
 `schema/artifact-spec.schema.json`), pinned by path and SHA-256 content
-digest. A bundle type is registered for that corpus only, after the built-ins
-and in bundle order; a bundle element whose name is a built-in's, duplicates
+digest. A bundle type is registered for that corpus, after the built-ins
+and in bundle order, and for the corpora that inherit from it when a consumer
+composes a corpus with parent corpora (the type-override rules are in §6.5);
+a bundle element whose name is a built-in's, duplicates
 an earlier element, or fails the element contract is skipped with an advisory
 finding (`artifact-spec-skipped`), and built-ins always win. A bundle the
 consumer cannot honour — a malformed declaration, a missing or unreadable
@@ -273,6 +275,36 @@ artifact_types:
 `version` MUST be `1`; `path` MUST be POSIX-relative to the repository root
 and resolve to a regular file inside it (no absolute forms, `.`, `..`, or
 symlinks); `digest` MUST match the file's bytes before the bundle is read.
+
+A consumer that composes a corpus with parent corpora (an implementation
+concern outside this specification) composes their bundle types bottom-up
+after the corpus's own: an element two sources declare with identical content
+is one type; a name two sources declare with different content is a blocking
+composition failure (`corpus-federation-artifact-type-conflict`) unless the
+composing corpus records which declaration wins under `overrides`:
+
+```yaml
+artifact_types:
+  version: 1
+  bundle:            # OPTIONAL when overrides is present
+    path: .decided/artifact-specs.json
+    digest: sha256:<64 lowercase hex>
+  overrides:
+    - name: runbook
+      prefer: acme/standards
+      rationale: APP-KWJ9D3C1S10N
+```
+
+Each entry carries exactly `name` (a type name), `prefer` (the literal `local`
+or the global source identity of a parent in the composing corpus's inherited
+view), and `rationale` (the canonical identifier of exactly one Accepted,
+unretired decision artifact of the composing corpus). A name MUST appear at
+most once; an override for a name that does not collide, a `prefer` outside
+the inherited view or naming no candidate, or a rationale that does not
+resolve to such a decision is a blocking failure
+(`corpus-federation-invalid-override`). Unknown keys under `artifact_types` or
+under an override entry are malformed (`artifact-spec-bundle-config-invalid`).
+The winning declaration is what the corpus's descendants inherit.
 
 ### 6.6 Sections per type
 
