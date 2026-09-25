@@ -5,7 +5,8 @@
 ## 1. Abstract
 
 RAC (Requirements as Code) is a format for typed, validated, versioned product
-knowledge — requirements, decisions, roadmaps, prompts, and designs — stored as
+knowledge — requirements, decisions, roadmaps, prompts, designs, and risks —
+stored as
 Markdown files in a Git tree. This specification defines the artifact model,
 the closed `status` lifecycle, the closed typed-relationship vocabulary, and
 the validation and conformance rules a corpus and its tools must satisfy. It is
@@ -109,7 +110,7 @@ mechanical and one-directional:
    producer MUST be able to emit the derived bundle: one file per typed
    artifact whose OKF `type` maps from the RAC type (`requirement`→`Requirement`,
    `decision`→`ADR`, `design`→`Design`, `roadmap`→`Roadmap`,
-   `prompt`→`Prompt`), plus generated `index.md`/`log.md` entry points. A
+   `prompt`→`Prompt`, `risk`→`Risk`), plus generated `index.md`/`log.md` entry points. A
    registered RAC type without an OKF mapping is a conformance error
    (`okf-unmapped-type`), never a silent omission. <!-- inv: okf_composition -->
 2. RAC's other envelope keys (`schema_version`, `id`, `relationships`, `tags`)
@@ -139,7 +140,7 @@ entry points; an untyped document at those paths is a legitimate entry point.
 
 The built-in artifact type set is closed: <!-- inv: artifact_types -->
 
-`requirement` · `decision` · `roadmap` · `prompt` · `design`
+`requirement` · `decision` · `roadmap` · `prompt` · `design` · `risk`
 
 A corpus MAY extend its own type set by pinning a **spec bundle** in its
 configuration (§6.5): one JSON file in the shape of the shared registry
@@ -321,9 +322,11 @@ and extracted but never scored and never reported missing.
 | `roadmap` | Outcomes, Initiatives | Success Measures, Assumptions, Risks |
 | `prompt` | Objective, Input, Instructions, Output | Constraints, Examples, Evaluation |
 | `design` | Context, User Need, Design, Constraints | Rationale, Alternatives, Accessibility, Style Guidance, Open Questions |
+| `risk` | Risk, Likelihood, Impact | Context, Assumptions |
 
 Each type's optional sections are exactly its relationship sections (§8.2)
-plus, for `decision`, `Supersedes` and `Code Constraints`. Recognized heading
+plus, for `decision`, `Supersedes` and `Code Constraints`, and for `risk`,
+`Mitigation`. Recognized heading
 synonyms (e.g. `Success Criteria` → `Success Metrics`) aid classification
 only; validation expects the canonical headings.
 <!-- inv: sections_per_type -->
@@ -389,6 +392,7 @@ unknown value is the blocking finding `invalid-<type>-status`.
 | `requirement` | Proposed, Accepted | Superseded, Deprecated |
 | `decision` | Proposed, Accepted | Superseded, Deprecated |
 | `design` | Proposed, Accepted | Superseded, Deprecated |
+| `risk` | Proposed, Accepted | Superseded, Deprecated |
 | `roadmap` | Planned, Achieved | Superseded, Abandoned |
 | `prompt` | Active | Deprecated |
 
@@ -455,13 +459,14 @@ stripped; otherwise the line text *is* the reference, preserved verbatim.
 
 | Edge | Declared by | Target (range) | Direction | Validation |
 | --- | --- | --- | --- | --- |
-| `related_requirements` | all five types | `requirement` | undirected | resolve + range + status |
-| `related_decisions` | all five types | `decision` | undirected | resolve + range + status |
-| `related_roadmaps` | all five types | `roadmap` | undirected | resolve + range + status |
+| `related_requirements` | all six types | `requirement` | undirected | resolve + range + status |
+| `related_decisions` | all six types | `decision` | undirected | resolve + range + status |
+| `related_roadmaps` | all six types | `roadmap` | undirected | resolve + range + status |
 | `related_prompts` | requirement, roadmap, design | `prompt` | undirected | resolve + range + status |
-| `related_designs` | requirement, decision, roadmap, prompt | `design` | undirected | resolve + range + status |
+| `related_designs` | requirement, decision, roadmap, prompt, risk | `design` | undirected | resolve + range + status |
+| `related_risks` | requirement, decision, roadmap, prompt, design | `risk` | undirected | resolve + range + status |
 | `supersedes` | decision | `decision` | directed (inverse `superseded-by`), acyclic | resolve + range; exempt from the retired-target rule |
-| `related_tickets` | all five types | external ticket key/URL | undirected | format-linted against the configured provider; never resolved |
+| `related_tickets` | all six types | external ticket key/URL | undirected | format-linted against the configured provider; never resolved |
 | `verified_by` | requirement | external test/trace path | directed (inverse `verifies`) | recorded; not resolved, not existence-checked |
 | `applies_to` | decision | repo path, glob, or component | directed (inverse `governed_by`) | literal path entries existence-checked against the repo root |
 
@@ -663,7 +668,7 @@ and info advisory:**
 | `malformed-frontmatter`, `duplicate-frontmatter-key`, `invalid-metadata-field`, `unsupported-schema-version`, `invalid-id-syntax`, `conflicting-identity` | error | blocking |
 | `missing-title`, `multiple-titles` | error | blocking |
 | `missing-<required-section>` (per type, §6.6) | error | blocking |
-| `invalid-requirement-status`, `invalid-decision-status`, `invalid-decision-category`, `invalid-roadmap-status`, `invalid-roadmap-horizon`, `invalid-prompt-status`, `invalid-design-status` | error | blocking |
+| `invalid-requirement-status`, `invalid-decision-status`, `invalid-decision-category`, `invalid-roadmap-status`, `invalid-roadmap-horizon`, `invalid-prompt-status`, `invalid-design-status`, `invalid-risk-status` | error | blocking |
 | `req-missing-id`, `empty-req-text`, `malformed-req-id`, `duplicate-req-id` | error | blocking |
 | `requirement-normative-keyword` | error | blocking |
 | `malformed-ticket-reference` | error | blocking |

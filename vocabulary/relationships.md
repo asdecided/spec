@@ -11,13 +11,14 @@ the remaining line text *is* the reference, verbatim).
 
 | Edge | Declared by (domain) | Target (range) | Direction | Inverse | Cardinality | Validation level |
 | --- | --- | --- | --- | --- | --- | --- |
-| `related_requirements` | all five types | `requirement` | undirected | — | many | resolve + range + status: error/blocking on failure |
-| `related_decisions` | all five types | `decision` | undirected | — | many | resolve + range + status |
-| `related_roadmaps` | all five types | `roadmap` | undirected | — | many | resolve + range + status |
+| `related_requirements` | all six types | `requirement` | undirected | — | many | resolve + range + status: error/blocking on failure |
+| `related_decisions` | all six types | `decision` | undirected | — | many | resolve + range + status |
+| `related_roadmaps` | all six types | `roadmap` | undirected | — | many | resolve + range + status |
 | `related_prompts` | requirement, roadmap, design | `prompt` | undirected | — | many | resolve + range + status |
-| `related_designs` | requirement, decision, roadmap, prompt | `design` | undirected | — | many | resolve + range + status |
+| `related_designs` | requirement, decision, roadmap, prompt, risk | `design` | undirected | — | many | resolve + range + status |
+| `related_risks` | requirement, decision, roadmap, prompt, design | `risk` | undirected | — | many | resolve + range + status |
 | `supersedes` | decision | `decision` | **directed, acyclic** | `superseded-by` | many | resolve + range + acyclicity; exempt from the retired-target rule |
-| `related_tickets` | all five types | external ticket key or URL | undirected | — | many | format lint against the configured provider (`malformed-ticket-reference`, blocking); never resolved in-corpus |
+| `related_tickets` | all six types | external ticket key or URL | undirected | — | many | format lint against the configured provider (`malformed-ticket-reference`, blocking); never resolved in-corpus |
 | `verified_by` | requirement | external test/trace file path | directed | `verifies` | many | recorded only; not resolved, not existence-checked |
 | `applies_to` | decision | repository path, glob, or component label | directed | `governed_by` | many | literal path entries existence-checked (`applies-to-target-not-found`, blocking); globs and labels recorded only |
 

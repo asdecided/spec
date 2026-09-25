@@ -18,7 +18,7 @@
     "type": {
       "description": "The declared artifact type. The closed built-in set (SPEC.md section 6.1); a corpus that pins a spec bundle (section 6.5) also registers the bundle's admitted type names for itself, which this enum cannot enumerate. Any other value is the blocking finding invalid-metadata-field.",
       "type": "string",
-      "enum": ["requirement", "decision", "roadmap", "prompt", "design"]
+      "enum": ["requirement", "decision", "roadmap", "prompt", "design", "risk"]
     },
     "relationships": {
       "description": "RESERVED (SPEC.md section 8.6): relationship kind -> list of artifact-ID strings. Shape-validated only; the reference validator does not check kinds against the relationship vocabulary and does not yet consume this field — body relationship sections remain authoritative.",

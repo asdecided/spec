@@ -6,6 +6,26 @@ versioning; the compatibility rules are in SPEC.md §10.2.
 
 ## Unreleased
 
+- **Risk artifact type** (minor, additive; spec 0.2) — `risk` joins the closed
+  built-in type set (§6.1) after `design`: required sections Risk, Likelihood,
+  Impact; recommended Context, Assumptions; optional Mitigation and its
+  relationship sections (§6.6). Status reuses the knowledge lifecycle —
+  Proposed, Accepted live; Superseded, Deprecated retired (§7) — and an unknown
+  value is `invalid-risk-status` (§9.3). Likelihood and impact are prose, never
+  an enum or a score. A new undirected edge, `related_risks` (target `risk`,
+  resolve + range + status), is declared by requirement, decision, roadmap,
+  prompt, and design; a risk declares `related_requirements`,
+  `related_decisions`, `related_roadmaps`, `related_designs`, and
+  `related_tickets` (§8.2). The OKF export maps `risk` to `Risk` (§5).
+  `schema/artifact-specs.json` appends the `risk` element and the
+  `related risks` optional section and description; the closed enums in
+  `schema/*.schema.json`, `vocabulary/`, and `extraction-inventory.json`
+  follow. New examples: `examples/risk-corpus/` (a corpus declaring
+  `rac_spec: "0.2"`) and `examples/invalid/invalid-risk-status.md`, with five
+  output-parity vectors; the existing vectors are unchanged. A corpus holding
+  a Risk artifact targets 0.2, and a 0.1 consumer must refuse it (§10.3).
+  Mirrors asdecided-core ADR-151.
+
 - **Corpus-pinned spec bundles** (minor, additive) — §6.1 lets a corpus extend
   its own artifact type set with one JSON bundle in the registry's shape,
   pinned by path and SHA-256 digest through a new `artifact_types` stanza in

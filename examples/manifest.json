@@ -13,6 +13,11 @@
       "path": "examples/valid",
       "command": "rac validate examples/valid && rac relationships examples/valid --validate",
       "expect": { "exit": 0, "blocking_findings": 0 }
+    },
+    {
+      "path": "examples/risk-corpus",
+      "command": "rac validate examples/risk-corpus && rac relationships examples/risk-corpus --validate",
+      "expect": { "exit": 0, "blocking_findings": 0 }
     }
   ],
   "invalid": [
@@ -26,6 +31,12 @@
       "path": "examples/invalid/invalid-status.md",
       "command": "rac validate examples/invalid/invalid-status.md",
       "expected": [{ "code": "invalid-decision-status", "severity": "error", "enforcement": "blocking" }],
+      "spec": "SPEC.md 7"
+    },
+    {
+      "path": "examples/invalid/invalid-risk-status.md",
+      "command": "rac validate examples/invalid/invalid-risk-status.md",
+      "expected": [{ "code": "invalid-risk-status", "severity": "error", "enforcement": "blocking" }],
       "spec": "SPEC.md 7"
     },
     {

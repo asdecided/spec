@@ -5,7 +5,7 @@
 [Specification guide](https://asdecided.com/docs/spec/) · [Product site](https://asdecided.com/) · [Canonical sources](https://asdecided.com/sources)
 
 RAC (Requirements as Code) defines how requirements, decisions, roadmaps,
-prompts, and designs live as typed Markdown in Git. It gives that knowledge
+prompts, designs, and risks live as typed Markdown in Git. It gives that knowledge
 durable identity, a closed lifecycle, typed relationships, and conformance rules
 strict enough for an agent to treat the current record as authoritative.
 
