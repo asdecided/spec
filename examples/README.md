@@ -8,8 +8,10 @@ produce.
 
 - `minimal-corpus/` — SPEC.md Appendix A verbatim: the smallest corpus that
   validates with zero blocking findings.
-- `valid/` — one minimal valid artifact per type, cross-linked so the
-  relationship checks also pass.
+- `valid/` — one minimal valid artifact for each of the five spec 0.1 types,
+  cross-linked so the relationship checks also pass.
+- `risk-corpus/` — a Risk (spec 0.2) linked from a decision and a
+  requirement through `## Related Risks`, and linking back.
 - `invalid/` — one case per major rule. Single files exercise structural
   rules; `corpus-*` directories exercise corpus-level relationship rules.
   Every case carries an HTML-comment annotation naming its expected finding.

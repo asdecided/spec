@@ -131,6 +131,61 @@
       "expect_exit": 1,
       "stdout": "conformance/vectors/validate-invalid-duplicate-req-id.stdout",
       "stdout_sha256": "7bf5fc23abecc026a309db30fb4f82973b02fcd0108e3ae271a4843c16fafbc8"
+    },
+    {
+      "id": "validate-risk-corpus",
+      "argv": [
+        "validate",
+        "examples/risk-corpus",
+        "--json"
+      ],
+      "expect_exit": 0,
+      "stdout": "conformance/vectors/validate-risk-corpus.stdout",
+      "stdout_sha256": "f9292a9164229b49b45a1946b8ce9eea2a323579319c6796754475083c16c997"
+    },
+    {
+      "id": "inspect-risk-corpus",
+      "argv": [
+        "inspect",
+        "examples/risk-corpus",
+        "--json"
+      ],
+      "expect_exit": 0,
+      "stdout": "conformance/vectors/inspect-risk-corpus.stdout",
+      "stdout_sha256": "f2f674d82b5b0347d1a3b2811ba5cdafac65a60555f7eedba058f4fdb10d7d27"
+    },
+    {
+      "id": "relationships-risk-corpus",
+      "argv": [
+        "relationships",
+        "examples/risk-corpus",
+        "--json"
+      ],
+      "expect_exit": 0,
+      "stdout": "conformance/vectors/relationships-risk-corpus.stdout",
+      "stdout_sha256": "81740df242344490693c0bc7a9369cc2a5b7a39ea29170d5af98d8c296c10511"
+    },
+    {
+      "id": "stats-risk-corpus",
+      "argv": [
+        "stats",
+        "examples/risk-corpus",
+        "--json"
+      ],
+      "expect_exit": 0,
+      "stdout": "conformance/vectors/stats-risk-corpus.stdout",
+      "stdout_sha256": "167db4a9389ac3be6b8adb6d58143760b956d90c1bf35486f5f28ad67afd2974"
+    },
+    {
+      "id": "validate-invalid-risk-status",
+      "argv": [
+        "validate",
+        "examples/invalid/invalid-risk-status.md",
+        "--json"
+      ],
+      "expect_exit": 1,
+      "stdout": "conformance/vectors/validate-invalid-risk-status.stdout",
+      "stdout_sha256": "2faf1d08f6a874b3b86b48f328c6e4e8c3fb88805d26873fe60d35a4a5aac2cf"
     }
   ]
 }

@@ -82,7 +82,7 @@
       "additionalProperties": { "type": "string" }
     },
     "okf_type": {
-      "description": "Appended, optional. The OKF type an export writes for artifacts of this type. Absent on the built-in five, whose mapping is the fixed table in the OKF profile (requirement to Requirement, decision to ADR, roadmap to Roadmap, prompt to Prompt, design to Design). A bundle element that omits it exports under its display. Non-empty when present.",
+      "description": "Appended, optional. The OKF type an export writes for artifacts of this type. Absent on the built-ins, whose mapping is the fixed table in the OKF profile (requirement to Requirement, decision to ADR, roadmap to Roadmap, prompt to Prompt, design to Design, risk to Risk). A bundle element that omits it exports under its display. Non-empty when present.",
       "type": "string",
       "minLength": 1,
       "pattern": "^\\S(.*\\S)?$"

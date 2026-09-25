@@ -1,0 +1,35 @@
+{
+  "schema_version": "1",
+  "directory": "examples/risk-corpus",
+  "recursive": true,
+  "summary": {
+    "total_files": 3,
+    "counts": {
+      "requirement": 1,
+      "decision": 1,
+      "roadmap": 0,
+      "prompt": 0,
+      "design": 0,
+      "risk": 1,
+      "unknown": 0
+    },
+    "unknown": 0
+  },
+  "files": [
+    {
+      "path": "examples/risk-corpus/decision.md",
+      "type": "decision",
+      "confidence": 0.78
+    },
+    {
+      "path": "examples/risk-corpus/requirement.md",
+      "type": "requirement",
+      "confidence": 0.71
+    },
+    {
+      "path": "examples/risk-corpus/risk.md",
+      "type": "risk",
+      "confidence": 1.0
+    }
+  ]
+}

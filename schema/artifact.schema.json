@@ -11,7 +11,7 @@
     },
     "type": {
       "type": "string",
-      "enum": ["requirement", "decision", "roadmap", "prompt", "design"]
+      "enum": ["requirement", "decision", "roadmap", "prompt", "design", "risk"]
     },
     "title": {
       "description": "The single top-level `#` title. Exactly one is required in the source (missing-title / multiple-titles are blocking).",
@@ -40,7 +40,7 @@
   "required": ["type", "title", "sections"],
   "$defs": {
     "statusRPD": {
-      "description": "First non-empty line of `## Status` for requirement/decision/design: Proposed | Accepted | Superseded | Deprecated (case-insensitive). An unknown value is the blocking finding invalid-<type>-status.",
+      "description": "First non-empty line of `## Status` for requirement/decision/design/risk: Proposed | Accepted | Superseded | Deprecated (case-insensitive). An unknown value is the blocking finding invalid-<type>-status.",
       "type": "string",
       "pattern": "^\\s*([Pp][Rr][Oo][Pp][Oo][Ss][Ee][Dd]|[Aa][Cc][Cc][Ee][Pp][Tt][Ee][Dd]|[Ss][Uu][Pp][Ee][Rr][Ss][Ee][Dd][Ee][Dd]|[Dd][Ee][Pp][Rr][Ee][Cc][Aa][Tt][Ee][Dd])\\s*(\\n[\\s\\S]*)?$"
     },
@@ -123,6 +123,17 @@
         "properties": {
           "sections": {
             "required": ["context", "user need", "design", "constraints"],
+            "properties": { "status": { "$ref": "#/$defs/statusRPD" } }
+          }
+        }
+      }
+    },
+    {
+      "if": { "properties": { "type": { "const": "risk" } }, "required": ["type"] },
+      "then": {
+        "properties": {
+          "sections": {
+            "required": ["risk", "likelihood", "impact"],
             "properties": { "status": { "$ref": "#/$defs/statusRPD" } }
           }
         }
