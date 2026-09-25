@@ -1,0 +1,45 @@
+{
+  "directory": "examples/risk-corpus",
+  "empty": false,
+  "features": 1,
+  "valid_features": 1,
+  "invalid_features": 0,
+  "requirements": 1,
+  "metrics": 0,
+  "risks": 1,
+  "features_missing_metrics": 1,
+  "features_missing_risks": 0,
+  "missing_metrics": [
+    "Durable order events"
+  ],
+  "missing_risks": [],
+  "average_requirements_per_feature": 1.0,
+  "largest_feature": {
+    "name": "Durable order events",
+    "requirements": 1
+  },
+  "requirements_by_feature": [
+    {
+      "name": "Durable order events",
+      "requirements": 1
+    }
+  ],
+  "invalid": [],
+  "decisions": {
+    "count": 1,
+    "by_status": {
+      "Accepted": 1
+    },
+    "by_category": {}
+  },
+  "risk_artifacts": {
+    "count": 1,
+    "valid": 1,
+    "invalid": []
+  },
+  "relationships": {
+    "related_requirements": 1,
+    "related_decisions": 1,
+    "related_risks": 2
+  }
+}

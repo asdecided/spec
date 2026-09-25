@@ -7,7 +7,7 @@
   },
 
   "artifact_types": {
-    "closed_set": ["requirement", "decision", "roadmap", "prompt", "design"],
+    "closed_set": ["requirement", "decision", "roadmap", "prompt", "design", "risk"],
     "source": "core/artifacts.py ARTIFACT_SPECS; frontmatter `type` is validated against this registry (core/frontmatter.py spec_for check)",
     "unknown_is_valid": "A document matching no type classifies as 'unknown'. Unknown is a valid, successful outcome, not an error (core/classification.py). Directory validation reports unknown files as skipped, never failed (services/validate.py STATUS_SKIPPED)."
   },
@@ -62,37 +62,45 @@
     "requirement": {
       "required": ["problem", "requirements"],
       "recommended": ["success metrics", "risks", "assumptions"],
-      "optional": ["related decisions", "related roadmaps", "related prompts", "related designs", "related requirements", "related tickets", "verified by"],
+      "optional": ["related decisions", "related roadmaps", "related prompts", "related designs", "related requirements", "related risks", "related tickets", "verified by"],
       "synonyms": {"success criteria": "success metrics", "kpis": "success metrics", "kpi": "success metrics"},
       "missing_required_codes": ["missing-problem", "missing-requirements"]
     },
     "decision": {
       "required": ["context", "decision", "consequences"],
       "recommended": ["status", "category", "alternatives considered"],
-      "optional": ["supersedes", "related requirements", "related roadmaps", "related designs", "related decisions", "related tickets", "applies to"],
+      "optional": ["supersedes", "related requirements", "related roadmaps", "related designs", "related decisions", "related risks", "related tickets", "applies to"],
       "synonyms": {"alternatives": "alternatives considered", "options considered": "alternatives considered"},
       "missing_required_codes": ["missing-context", "missing-decision", "missing-consequences"]
     },
     "roadmap": {
       "required": ["outcomes", "initiatives"],
       "recommended": ["success measures", "assumptions", "risks"],
-      "optional": ["related decisions", "related requirements", "related prompts", "related designs", "related roadmaps", "related tickets"],
+      "optional": ["related decisions", "related requirements", "related prompts", "related designs", "related roadmaps", "related risks", "related tickets"],
       "synonyms": {"success metrics": "success measures"},
       "missing_required_codes": ["missing-outcomes", "missing-initiatives"]
     },
     "prompt": {
       "required": ["objective", "input", "instructions", "output"],
       "recommended": ["constraints", "examples", "evaluation"],
-      "optional": ["related requirements", "related decisions", "related roadmaps", "related designs", "related tickets"],
+      "optional": ["related requirements", "related decisions", "related roadmaps", "related designs", "related risks", "related tickets"],
       "synonyms": {"expected output": "output", "output specification": "output", "input specification": "input"},
       "missing_required_codes": ["missing-objective", "missing-input", "missing-instructions", "missing-output"]
     },
     "design": {
       "required": ["context", "user need", "design", "constraints"],
       "recommended": ["rationale", "alternatives", "accessibility", "style guidance", "open questions"],
-      "optional": ["related requirements", "related decisions", "related roadmaps", "related prompts", "related tickets"],
+      "optional": ["related requirements", "related decisions", "related roadmaps", "related prompts", "related risks", "related tickets"],
       "synonyms": {},
       "missing_required_codes": ["missing-context", "missing-user-need", "missing-design", "missing-constraints"]
+    },
+    "risk": {
+      "required": ["risk", "likelihood", "impact"],
+      "recommended": ["context", "assumptions"],
+      "optional": ["mitigation", "related requirements", "related decisions", "related roadmaps", "related designs", "related tickets"],
+      "synonyms": {},
+      "missing_required_codes": ["missing-risk", "missing-likelihood", "missing-impact"],
+      "note": "Added in spec 0.2 (asdecided-core ADR-151): likelihood and impact are prose, never an enum or score; mitigation records the chosen response as knowledge, never tasks"
     },
     "notes": "Required sections must be present (error when missing); recommended sections never fail (review priority-4 advisory when absent); optional sections are recognized/extracted but never scored, never reported missing. Missing-required code pattern: missing-<section-with-hyphens>.",
     "source": "core/artifacts.py ARTIFACT_SPECS, core/validation.py _validate_required_sections"
@@ -104,6 +112,7 @@
       "requirement": {"allowed": ["Proposed", "Accepted", "Superseded", "Deprecated"], "retired": ["Superseded", "Deprecated"]},
       "decision":    {"allowed": ["Proposed", "Accepted", "Superseded", "Deprecated"], "retired": ["Superseded", "Deprecated"]},
       "design":      {"allowed": ["Proposed", "Accepted", "Superseded", "Deprecated"], "retired": ["Superseded", "Deprecated"]},
+      "risk":        {"allowed": ["Proposed", "Accepted", "Superseded", "Deprecated"], "retired": ["Superseded", "Deprecated"]},
       "roadmap":     {"allowed": ["Planned", "Achieved", "Superseded", "Abandoned"], "retired": ["Superseded", "Abandoned"], "note": "Achieved is a live TERMINAL state (ADR-061): realized intent, still valid to reference, not retired"},
       "prompt":      {"allowed": ["Active", "Deprecated"], "retired": ["Deprecated"]}
     },
@@ -119,15 +128,16 @@
 
   "relationship_types": {
     "declaration": "Relationships are explicit Markdown sections (## Related Decisions, ## Supersedes, ...) whose body lines are references — one reference per non-empty line, well-formed leading list marker stripped, otherwise line preserved verbatim (the line text IS the reference; ADR-016)",
-    "closed_vocabulary_order": ["related_requirements", "related_decisions", "related_roadmaps", "related_prompts", "related_designs", "supersedes", "related_tickets", "verified_by", "applies_to"],
+    "closed_vocabulary_order": ["related_requirements", "related_decisions", "related_roadmaps", "related_prompts", "related_designs", "related_risks", "supersedes", "related_tickets", "verified_by", "applies_to"],
     "registry": {
-      "related_requirements": {"range": ["requirement"], "directional": false, "acyclic": false, "symmetric": true, "forbids_target_status": true, "domain": ["requirement", "decision", "roadmap", "prompt", "design"]},
-      "related_decisions":    {"range": ["decision"],    "directional": false, "acyclic": false, "symmetric": true, "forbids_target_status": true, "domain": ["requirement", "decision", "roadmap", "prompt", "design"]},
-      "related_roadmaps":     {"range": ["roadmap"],     "directional": false, "acyclic": false, "symmetric": true, "forbids_target_status": true, "domain": ["requirement", "decision", "roadmap", "prompt", "design"]},
+      "related_requirements": {"range": ["requirement"], "directional": false, "acyclic": false, "symmetric": true, "forbids_target_status": true, "domain": ["requirement", "decision", "roadmap", "prompt", "design", "risk"]},
+      "related_decisions":    {"range": ["decision"],    "directional": false, "acyclic": false, "symmetric": true, "forbids_target_status": true, "domain": ["requirement", "decision", "roadmap", "prompt", "design", "risk"]},
+      "related_roadmaps":     {"range": ["roadmap"],     "directional": false, "acyclic": false, "symmetric": true, "forbids_target_status": true, "domain": ["requirement", "decision", "roadmap", "prompt", "design", "risk"]},
       "related_prompts":      {"range": ["prompt"],      "directional": false, "acyclic": false, "symmetric": true, "forbids_target_status": true, "domain": ["requirement", "roadmap", "design"]},
-      "related_designs":      {"range": ["design"],      "directional": false, "acyclic": false, "symmetric": true, "forbids_target_status": true, "domain": ["requirement", "decision", "roadmap", "prompt"]},
+      "related_designs":      {"range": ["design"],      "directional": false, "acyclic": false, "symmetric": true, "forbids_target_status": true, "domain": ["requirement", "decision", "roadmap", "prompt", "risk"]},
+      "related_risks":        {"range": ["risk"],        "directional": false, "acyclic": false, "symmetric": true, "forbids_target_status": true, "domain": ["requirement", "decision", "roadmap", "prompt", "design"], "note": "added in spec 0.2 (asdecided-core ADR-151)"},
       "supersedes":           {"range": ["decision"], "directional": true, "acyclic": true, "symmetric": false, "inverse": "superseded-by", "forbids_target_status": false, "domain": ["decision"], "note": "the ONLY edge exempt from the retired-target rule"},
-      "related_tickets":      {"range": [], "external": true, "external_provider": true, "domain": ["requirement", "decision", "roadmap", "prompt", "design"], "note": "target is an external ticket key/URL; format-linted against .rac/config.yaml ticketing.provider (jira|github|linear|azure-devops|servicenow|none); never resolved in-corpus"},
+      "related_tickets":      {"range": [], "external": true, "external_provider": true, "domain": ["requirement", "decision", "roadmap", "prompt", "design", "risk"], "note": "target is an external ticket key/URL; format-linted against .rac/config.yaml ticketing.provider (jira|github|linear|azure-devops|servicenow|none); never resolved in-corpus"},
       "verified_by":          {"range": [], "external": true, "directional": true, "symmetric": false, "inverse": "verifies", "domain": ["requirement"], "note": "targets are external test/trace file paths; recorded, not resolved, not existence-checked"},
       "applies_to":           {"range": [], "external": true, "filesystem_scoped": true, "directional": true, "symmetric": false, "inverse": "governed_by", "domain": ["decision"], "note": "targets are repo paths/globs/component labels a decision governs; LITERAL path entries (containing '/', no glob chars) are existence-checked against the repo root (applies-to-target-not-found, error); globs and component labels are recorded without checking"}
     },
@@ -187,7 +197,7 @@
     "conflicting-identity": {"source": "validate", "severity": "error", "enforcement": "blocking"},
     "missing-title": {"source": "validate", "severity": "error", "enforcement": "blocking"},
     "multiple-titles": {"source": "validate", "severity": "error", "enforcement": "blocking"},
-    "missing-<required-section>": {"source": "validate", "severity": "error", "enforcement": "blocking", "notes": "per type; codes: missing-problem, missing-requirements, missing-context, missing-decision, missing-consequences, missing-outcomes, missing-initiatives, missing-objective, missing-input, missing-instructions, missing-output, missing-user-need, missing-design, missing-constraints"},
+    "missing-<required-section>": {"source": "validate", "severity": "error", "enforcement": "blocking", "notes": "per type; codes: missing-problem, missing-requirements, missing-context, missing-decision, missing-consequences, missing-outcomes, missing-initiatives, missing-objective, missing-input, missing-instructions, missing-output, missing-user-need, missing-design, missing-constraints, missing-risk, missing-likelihood, missing-impact"},
     "invalid-requirement-status": {"source": "validate", "severity": "error", "enforcement": "blocking"},
     "invalid-decision-status": {"source": "validate", "severity": "error", "enforcement": "blocking"},
     "invalid-decision-category": {"source": "validate", "severity": "error", "enforcement": "blocking"},
@@ -195,6 +205,7 @@
     "invalid-roadmap-horizon": {"source": "validate", "severity": "error", "enforcement": "blocking"},
     "invalid-prompt-status": {"source": "validate", "severity": "error", "enforcement": "blocking"},
     "invalid-design-status": {"source": "validate", "severity": "error", "enforcement": "blocking"},
+    "invalid-risk-status": {"source": "validate", "severity": "error", "enforcement": "blocking"},
     "roadmap-no-advancement-link": {"source": "validate", "severity": "warning", "enforcement": "advisory"},
     "req-missing-id": {"source": "validate", "severity": "error", "enforcement": "blocking"},
     "empty-req-text": {"source": "validate", "severity": "error", "enforcement": "blocking"},
@@ -262,7 +273,7 @@
 
   "okf_composition": {
     "claim": "A RAC corpus is expressible as a conformant OKF v0.1 bundle (ADR-048: every RAC repository MUST be a conformant OKF v0.1 bundle); rac export --okf emits the derived bundle: one file per typed artifact with projected frontmatter (type mapped per OKF_TYPE, id, git-derived created/updated, tags), resolved relationships rendered as # Citations body links, generated index.md + log.md",
-    "type_map": {"requirement": "Requirement", "decision": "ADR", "design": "Design", "roadmap": "Roadmap", "prompt": "Prompt"},
+    "type_map": {"requirement": "Requirement", "decision": "ADR", "design": "Design", "roadmap": "Roadmap", "prompt": "Prompt", "risk": "Risk"},
     "direction": "one-way: RAC -> OKF always; OKF -> validated RAC is not generally possible (untyped links, open type set, no lifecycle)",
     "okf_spec_verified": "GoogleCloudPlatform/knowledge-catalog okf/SPEC.md fetched 2026-07-05: section 5.3 — 'The specific kind of relationship ... is conveyed by the surrounding prose, not by the link itself'; consumers 'MUST tolerate broken links'. Section 9 — consumers MUST NOT reject over missing optional fields, unknown type values, unknown keys, broken cross-links, missing index.md; consumers SHOULD preserve unknown keys (SHOULD, not MUST — SPEC.md section 5 deliberately says 'directed to preserve', not MUST). Section 11 — okf_version MAY be declared in bundle-root index.md frontmatter; consumers that do not understand it SHOULD attempt best-effort consumption. Required frontmatter: type only.",
     "source": "core/okf.py, output/okf.py, services/okf_conformance.py, docs/okf-profile.md, ADR-048"

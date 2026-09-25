@@ -10,10 +10,10 @@ line of the `## Status` section body, matched case-insensitively.
 
 | Type | Value | Meaning | Live / retired |
 | --- | --- | --- | --- |
-| requirement, decision, design | `Proposed` | drafted, not yet ratified | live |
-| requirement, decision, design | `Accepted` | ratified; current knowledge | live |
-| requirement, decision, design | `Superseded` | replaced by a newer artifact | **retired** |
-| requirement, decision, design | `Deprecated` | withdrawn without a replacement | **retired** |
+| requirement, decision, design, risk | `Proposed` | drafted, not yet ratified | live |
+| requirement, decision, design, risk | `Accepted` | ratified; current knowledge | live |
+| requirement, decision, design, risk | `Superseded` | replaced by a newer artifact | **retired** |
+| requirement, decision, design, risk | `Deprecated` | withdrawn without a replacement | **retired** |
 | roadmap | `Planned` | intent the team still holds | live |
 | roadmap | `Achieved` | intent realized; a valid historical record (live *terminal* state) | live |
 | roadmap | `Superseded` | intent replaced by another roadmap | **retired** |
@@ -41,9 +41,9 @@ diff). What is enforced is the consequence of the live/retired partition:
 The conventional lifecycles, for orientation (not enforced):
 
 ```text
-requirement / decision / design:  Proposed → Accepted → Superseded | Deprecated
-roadmap:                          Planned → Achieved | Superseded | Abandoned
-prompt:                           Active → Deprecated
+requirement / decision / design / risk:  Proposed → Accepted → Superseded | Deprecated
+roadmap:                                 Planned → Achieved | Superseded | Abandoned
+prompt:                                  Active → Deprecated
 ```
 
 ## Adjacent constrained enums

@@ -1,0 +1,14 @@
+{
+  "schema_version": "1",
+  "file": "examples/invalid/invalid-risk-status.md",
+  "valid": false,
+  "errors": [
+    {
+      "severity": "error",
+      "code": "invalid-risk-status",
+      "message": "## Status value 'Mitigated' is not one of: Proposed, Accepted, Superseded, Deprecated.",
+      "line": null
+    }
+  ],
+  "warnings": []
+}

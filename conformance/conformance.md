@@ -70,8 +70,8 @@ resolution, retirement handling, and refusal semantics only.
 
 The `examples/` directory is the executable conformance surface:
 
-- every corpus under `examples/valid/` and `examples/minimal-corpus/` MUST
-  produce zero blocking findings;
+- every corpus under `examples/valid/`, `examples/minimal-corpus/`, and
+  `examples/risk-corpus/` MUST produce zero blocking findings;
 - every case under `examples/invalid/` MUST produce the finding code named in
   `examples/manifest.json`, at the documented intrinsic severity and default
   enforcement class, and nothing weaker.

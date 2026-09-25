@@ -1,0 +1,51 @@
+{
+  "schema_version": "1",
+  "directory": "examples/risk-corpus",
+  "recursive": true,
+  "summary": {
+    "total_files": 3,
+    "checked": 3,
+    "valid": 3,
+    "invalid": 0,
+    "skipped_unknown": 0
+  },
+  "valid": true,
+  "files": [
+    {
+      "path": "examples/risk-corpus/decision.md",
+      "artifact_type": "decision",
+      "status": "valid",
+      "issues": []
+    },
+    {
+      "path": "examples/risk-corpus/requirement.md",
+      "artifact_type": "requirement",
+      "status": "valid",
+      "issues": [
+        {
+          "severity": "warning",
+          "code": "missing-success-metrics",
+          "message": "No ## Success Metrics section (optional, but recommended).",
+          "line": null
+        },
+        {
+          "severity": "warning",
+          "code": "requirement-non-ears",
+          "message": "REQ-001 has no normative keyword (SHALL/SHOULD/MAY); it does not state a testable requirement (EARS).",
+          "line": 18
+        }
+      ]
+    },
+    {
+      "path": "examples/risk-corpus/risk.md",
+      "artifact_type": "risk",
+      "status": "valid",
+      "issues": []
+    }
+  ],
+  "okf": {
+    "conformant": true,
+    "artifacts_checked": 3,
+    "findings": []
+  }
+}

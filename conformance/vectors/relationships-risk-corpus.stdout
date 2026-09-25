@@ -1,0 +1,44 @@
+{
+  "directory": "examples/risk-corpus",
+  "recursive": true,
+  "total_files": 3,
+  "artifacts_with_relationships": 3,
+  "relationship_count": 4,
+  "counts": {
+    "related_requirements": 1,
+    "related_decisions": 1,
+    "related_risks": 2
+  },
+  "artifacts": [
+    {
+      "path": "examples/risk-corpus/decision.md",
+      "type": "decision",
+      "relationships": {
+        "related_requirements": [
+          "EX-0000000000K3"
+        ],
+        "related_risks": [
+          "EX-0000000000K2"
+        ]
+      }
+    },
+    {
+      "path": "examples/risk-corpus/requirement.md",
+      "type": "requirement",
+      "relationships": {
+        "related_risks": [
+          "EX-0000000000K2"
+        ]
+      }
+    },
+    {
+      "path": "examples/risk-corpus/risk.md",
+      "type": "risk",
+      "relationships": {
+        "related_decisions": [
+          "EX-0000000000K1"
+        ]
+      }
+    }
+  ]
+}
