@@ -1,6 +1,6 @@
 # The RAC (Requirements as Code) Specification
 
-**Version 0.1.0**
+**Version 0.2.0**
 
 ## 1. Abstract
 
@@ -15,7 +15,7 @@ consumers (tools that read, validate, or serve them).
 
 ## 2. Status of this document
 
-This is **v0.1.0** of the RAC specification, extracted from the reference
+This is **v0.2.0** of the RAC specification, extracted from the reference
 implementation, [`asdecided-core`](https://github.com/asdecided/core). Every
 normative statement below is traceable to behavior the reference validator
 enforces today (the machine-checked trace lives in `extraction-inventory.json`;
@@ -825,7 +825,7 @@ configuration, `.rac/config.yaml`: <!-- inv: spec_version_declaration -->
 
 ```yaml
 repository_key: RAC
-rac_spec: "0.1"
+rac_spec: "0.2"
 ```
 
 **`rac_spec` versus `schema_version`.** These are two different version axes
@@ -833,8 +833,8 @@ and MUST NOT be conflated. `rac_spec` (corpus-level, this section) declares
 which version of *this specification* — the whole contract of §6–§11 — a
 corpus targets. `schema_version` (per-artifact frontmatter, §6.3) declares
 which version of the *frontmatter envelope* an individual artifact uses. Each
-spec version states which envelope versions it accepts: **spec v0.1 accepts
-`schema_version: 1`, and no other.** A future spec version MAY accept
+spec version states which envelope versions it accepts: **spec v0.1 and v0.2
+accept `schema_version: 1`, and no other.** A future spec version MAY accept
 additional envelope versions; that mapping is part of the spec contract, so a
 consumer resolves envelope compatibility only after it has accepted the
 declared `rac_spec` (§10.3).

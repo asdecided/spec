@@ -76,7 +76,7 @@ If you build an implementation, open an issue here to have it listed.
 
 ## How stable is this?
 
-This is v0.1.0, extracted from a validator with more than a thousand commits
+This is v0.2.0, extracted from a validator with more than a thousand commits
 and twenty-eight releases of dogfooding behind it. It is still pre-1.0, and
 breaking changes are expected. The compatibility policy in
 [SPEC.md §10](SPEC.md) governs what may change in minor versions (new enum

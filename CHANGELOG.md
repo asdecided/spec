@@ -6,6 +6,13 @@ versioning; the compatibility rules are in SPEC.md §10.2.
 
 ## Unreleased
 
+## v0.2.0 — 2026-09-27
+
+Minor, additive under §10.2: every v0.1 corpus is a valid v0.2 corpus, and
+`schema_version: 1` remains the only accepted envelope. A corpus that holds a
+Risk artifact, pins a spec bundle, or declares `artifact_types.overrides`
+targets v0.2.
+
 - **Risk artifact type** (minor, additive; spec 0.2) — `risk` joins the closed
   built-in type set (§6.1) after `design`: required sections Risk, Likelihood,
   Impact; recommended Context, Assumptions; optional Mitigation and its
