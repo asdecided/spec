@@ -27,12 +27,6 @@
           "code": "missing-success-metrics",
           "message": "No ## Success Metrics section (optional, but recommended).",
           "line": null
-        },
-        {
-          "severity": "warning",
-          "code": "requirement-non-ears",
-          "message": "REQ-001 has no normative keyword (SHALL/SHOULD/MAY); it does not state a testable requirement (EARS).",
-          "line": 18
         }
       ]
     },
