@@ -15,7 +15,7 @@ Order events are lost when the service restarts.
 
 ## Requirements
 
-- [REQ-001] An accepted order event survives a service restart.
+- [REQ-001] An accepted order event SHALL survive a service restart.
 
 ## Risks
 

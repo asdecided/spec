@@ -141,7 +141,7 @@
       ],
       "expect_exit": 0,
       "stdout": "conformance/vectors/validate-risk-corpus.stdout",
-      "stdout_sha256": "f9292a9164229b49b45a1946b8ce9eea2a323579319c6796754475083c16c997"
+      "stdout_sha256": "9b94901ccdcac50b96e006e8168e91738b51dbfb369d12f88241d660e6ee9d46"
     },
     {
       "id": "inspect-risk-corpus",
